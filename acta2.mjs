@@ -1,0 +1,30 @@
+const B='http://localhost:4017/api';
+const EXAM=(await import('../shared/examdata.js')).default;
+const fs=await import('fs');
+const api=async(a,p={},t='')=>(await fetch(B,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+t},body:JSON.stringify({action:a,params:p})})).json();
+let f=0;const ok=(c,m)=>{if(!c){f++;console.log('X',m)}else console.log('OK',m)};
+await api('setup',{nombre:'Coord',usuario:'admin',password:'admin123'});
+const adm=(await api('login',{usuario:'admin',password:'admin123'})).data.token;
+await api('saveSettings',{minAprob:60,intentos:1,especialidades:{neonatologia:{jefe:'Dr. Jorge Jefe',titular:'Dra. Teresa Titular'},cirugia:{jefe:'Dr. Mario Jefe',titular:'Dra. Sofia Titular'}}},adm);
+const specs=[['NEO-01','ALVAREZ SOTO','MARIA','neonatologia'],['NEO-02','BENITEZ CRUZ','JOSE','neonatologia'],['CIR-01','DURAN LOPEZ','EVA','cirugia']];
+for(const [m,a,n,e] of specs) await api('createStudent',{apellidos:a,nombre:n,email:m.toLowerCase()+'@h.mx',matricula:m,usuario:m.toLowerCase(),password:'pw1234',especialidad:e},adm);
+async function take(u,ok_ans,firma){
+  const t=(await api('login',{usuario:u,password:'pw1234'})).data.token;
+  await api('signConsent',{acepta:true,nombreCompleto:firma},t);
+  const st=await api('startAttempt',{},t);
+  const ans={}; st.data.questions.forEach(q=>ans[q.n]=ok_ans?EXAM.clave[String(q.n)]:(EXAM.clave[String(q.n)]==='a'?'b':'a'));
+  const r=await api('submitAttempt',{attemptId:st.data.attemptId,respuestas:ans},t);
+  await api('signConfidentiality',{acepta:true,nombreCompleto:firma},t);
+  return r.data.result;
+}
+const r1=await take('neo-01',true,'Maria Alvarez Soto');
+await take('neo-02',false,'Jose Benitez Cruz');
+const r3=await take('cir-01',true,'Eva Duran Lopez');
+ok(r1.calificacion===100,'NEO-01 100'); ok(r3.calificacion===100,'CIR-01 100');
+const ac=await api('actaPdf',{especialidad:'neonatologia'},adm);
+fs.writeFileSync('/tmp/acta_v2.pdf',Buffer.from(ac.data.base64,'base64'));
+const ex=await api('actasPdf',{},adm);
+ok(ex.ok&&ex.data.actas.length===5,'expediente 5 actas');
+fs.writeFileSync('/tmp/expediente.pdf',Buffer.from(ex.data.base64,'base64'));
+console.log(JSON.stringify(ex.data.resumenGlobal));
+console.log('folios:',ex.data.actas.map(x=>x.especialidad+'='+x.folio+':'+x.resumen.total).join(' | '));

@@ -256,11 +256,34 @@ td.act{text-align:right}
       <div class="field"><label class="f" for="lg-p">Contraseña</label><div class="pw"><input id="lg-p" type="password" class="t" required><button type="button" class="pw-eye" data-eye="lg-p">Ver</button></div></div>
       <div class="msg" id="lg-msg"></div>
       <button class="btn primary block">Entrar</button>
+      <div style="margin-top:14px;text-align:center">
+        <button type="button" class="lnk" id="lg-forgot">¿Olvidó su contraseña?</button>
+        <span class="muted" style="font-size:12px"> · </span>
+        <button type="button" class="lnk" id="lg-code">Ya tengo un código</button>
+      </div>
       <div id="g-slot" style="display:none;margin-top:16px">
         <div class="or"><span>o bien</span></div>
         <div id="g-btn"></div>
         <p class="muted" style="font-size:12px;margin:10px 0 0">Acceso con correo de Google. Su correo debe estar inscrito por el coordinador.</p>
       </div>
+    </form>
+    <form id="f-forgot" class="auth-card" style="display:none">
+      <div class="kick">Restablecer acceso</div><h2 class="title">Olvidé mi contraseña</h2>
+      <p class="muted" style="margin:0 0 18px">Escriba su usuario o su correo registrado. Enviaremos un código de un solo uso al correo de la cuenta, con vigencia de 30 minutos.</p>
+      <div class="field"><label class="f" for="fg-u">Usuario o correo</label><input id="fg-u" class="t" autocapitalize="none" spellcheck="false" required></div>
+      <div class="msg" id="fg-msg"></div>
+      <button class="btn primary block">Enviar código</button>
+      <div style="margin-top:14px;text-align:center"><button type="button" class="lnk" id="fg-back">Volver al acceso</button></div>
+    </form>
+    <form id="f-reset" class="auth-card" style="display:none">
+      <div class="kick">Restablecer acceso</div><h2 class="title">Nueva contraseña</h2>
+      <p class="muted" style="margin:0 0 18px">Escriba el código que recibió por correo y su nueva contraseña. El código sirve una sola vez.</p>
+      <div class="field"><label class="f" for="rs-t">Código de un solo uso</label><input id="rs-t" class="t mono" autocapitalize="characters" spellcheck="false" placeholder="8 caracteres" required></div>
+      <div class="field"><label class="f" for="rs-p">Nueva contraseña (mín. 6)</label><div class="pw"><input id="rs-p" type="password" class="t" required><button type="button" class="pw-eye" data-eye="rs-p">Ver</button></div></div>
+      <div class="field"><label class="f" for="rs-p2">Repetir contraseña</label><input id="rs-p2" type="password" class="t" required></div>
+      <div class="msg" id="rs-msg"></div>
+      <button class="btn primary block">Guardar contraseña</button>
+      <div style="margin-top:14px;text-align:center"><button type="button" class="lnk" id="rs-back">Volver al acceso</button></div>
     </form>
     <form id="f-setup" class="auth-card" style="display:none">
       <div class="kick">Configuración inicial</div><h2 class="title">Crear administrador</h2>
@@ -474,6 +497,50 @@ function onGoogleCredential(res) {
     setTok(d.token); enter(d.user);
     toast('Bienvenido, ' + (d.user.nombre || d.user.usuario) + '.');
   }).catch(fail);
+}
+function authCard(id) {
+  ['f-login', 'f-setup', 'f-forgot', 'f-reset'].forEach(function (k) {
+    var el = document.getElementById(k); if (el) el.style.display = (k === id ? '' : 'none');
+  });
+}
+function resetFromHash() {
+  var m = /#r=([A-Za-z0-9]+)/.exec(location.hash || '');
+  if (!m) return false;
+  var t = document.getElementById('rs-t'); if (t) t.value = m[1].toUpperCase();
+  authCard('f-reset'); return true;
+}
+function wireReset() {
+  var lf = document.getElementById('lg-forgot'), lc = document.getElementById('lg-code');
+  if (lf) lf.onclick = function () { authCard('f-forgot'); };
+  if (lc) lc.onclick = function () { authCard('f-reset'); };
+  ['fg-back', 'rs-back'].forEach(function (id) {
+    var b = document.getElementById(id); if (b) b.onclick = function () { authCard('f-login'); };
+  });
+  var ff = document.getElementById('f-forgot');
+  if (ff) ff.onsubmit = function (e) {
+    e.preventDefault();
+    var msg = document.getElementById('fg-msg');
+    msg.className = 'msg'; msg.textContent = 'Enviando…';
+    call('forgotPassword', { usuario: document.getElementById('fg-u').value }).then(function (d) {
+      msg.className = 'msg ok'; msg.textContent = d.mensaje || 'Revise su correo.';
+      authCard('f-reset');
+    }).catch(function (er) { msg.className = 'msg'; msg.textContent = (er && er.error) || 'No se pudo enviar el código.'; });
+  };
+  var fr = document.getElementById('f-reset');
+  if (fr) fr.onsubmit = function (e) {
+    e.preventDefault();
+    var msg = document.getElementById('rs-msg');
+    var p1 = document.getElementById('rs-p').value, p2 = document.getElementById('rs-p2').value;
+    if (p1 !== p2) { msg.className = 'msg'; msg.textContent = 'Las contraseñas no coinciden.'; return; }
+    msg.className = 'msg'; msg.textContent = 'Guardando…';
+    call('resetPassword', { token: document.getElementById('rs-t').value, nueva: p1 }).then(function (d) {
+      msg.className = 'msg ok'; msg.textContent = 'Contraseña actualizada. Ya puede entrar.';
+      toast('Contraseña actualizada para ' + d.usuario + '.');
+      if (location.hash) history.replaceState(null, '', location.pathname);
+      setTimeout(function () { authCard('f-login'); var u = document.getElementById('lg-u'); if (u) { u.value = d.usuario; u.focus(); } }, 900);
+    }).catch(function (er) { msg.className = 'msg'; msg.textContent = (er && er.error) || 'No se pudo cambiar la contraseña.'; });
+  };
+  resetFromHash();
 }
 function showLogin() {
   guard.stop(); $('#topbar').style.display = 'none'; show('login');
@@ -1075,7 +1142,7 @@ function xlsx(sheets) {
 }
 
 /* ================= inicio ================= */
-if (TOKEN) call('me').then(function (d) { enter(d.user); }).catch(function () { showLogin(); initGoogle(); }); else { showLogin(); initGoogle(); }
+if (TOKEN) call('me').then(function (d) { enter(d.user); }).catch(function () { showLogin(); initGoogle(); wireReset(); }); else { showLogin(); initGoogle(); wireReset(); }
 })();
 </script>
 </body>

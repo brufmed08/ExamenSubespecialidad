@@ -151,6 +151,91 @@ function createCore(EXAM, ctx) {
       return { token: tok, user: publicUser(u), via: 'google' };
     });
   };
+  /* ---------- restablecimiento de contraseña por correo ---------- */
+  var RESET_MIN = 30, RESET_TOPE = 5, ALFA = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  function tokHash(t) { return ctx.sha256('reset|' + String(t)); }
+  function codigoReset() {
+    var out = '', b = ctx.randBytes ? ctx.randBytes(8) : null;
+    for (var i = 0; i < 8; i++) {
+      var n = b ? b[i] : parseInt(ctx.rand(2), 16);
+      out += ALFA.charAt(n % ALFA.length);
+    }
+    return out;
+  }
+  function enlaceReset(codigo) {
+    var base = String(settings().urlBase || ctx.urlBase || '').replace(/\/+$/, '');
+    return { codigo: codigo, enlace: (base ? base + '/' : '') + '#r=' + codigo, base: base };
+  }
+  function buscaReset(codigo) {
+    var th = tokHash(N(codigo).toUpperCase().trim()), r = null;
+    ctx.store.list('resets').forEach(function (x) { if (!r && x.th === th) r = x; });
+    return r;
+  }
+  A.forgotPassword = function (p) {
+    return ctx.store.lock(function () {
+      var generico = { ok: true, mensaje: 'Si el dato corresponde a una cuenta registrada, enviamos un código al correo asociado. Caduca en ' + RESET_MIN + ' minutos.' };
+      var id = N(p.usuario || p.email).toLowerCase().trim();
+      if (!id) return generico;
+      var u = null;
+      ctx.store.list('users').forEach(function (x) {
+        if (u) return;
+        var em = String(x.email || '').toLowerCase().trim();
+        if (String(x.usuario || '').toLowerCase() === id || (em && em === id)) u = x;
+      });
+      if (!u || u.activo === false || !u.email) return generico;
+      var hora = now() - 3600000;
+      var rec = ctx.store.list('resets').filter(function (x) { return x.userId === u.id && x.creado > hora; });
+      if (rec.length >= RESET_TOPE) return generico;
+      var q = enlaceReset(codigoReset());
+      ctx.store.put('resets', { id: 'rs_' + ctx.rand(8), userId: u.id, th: tokHash(q.codigo),
+        creado: now(), expira: now() + RESET_MIN * 60000, usado: false });
+      var texto = 'Hola ' + u.nombre + ':\n\nSe solicitó restablecer la contraseña del sistema de evaluación de ' +
+        'subespecialidades pediátricas para la cuenta ' + u.usuario + '.\n\nCódigo de un solo uso: ' + q.codigo +
+        (q.base ? '\nEnlace directo: ' + q.enlace : '\nAbra el sistema, elija «Ya tengo un código» y escriba el código.') +
+        '\n\nCaduca en ' + RESET_MIN + ' minutos y sirve una sola vez. Si usted no lo solicitó, ignore este mensaje: ' +
+        'su contraseña actual sigue vigente y no se modificó nada.\n\nCoordinación de la evaluación';
+      deliver(enqueue({ canal: 'correo', para: u.email, nombre: u.nombre, tipo: 'reset', codigo: q.codigo,
+        asunto: 'Restablecer contraseña · Evaluación de subespecialidades', cuerpo: texto }), { tipo: 'reset', usuario: u.usuario });
+      return generico;
+    });
+  };
+  A.resetInfo = function (p) {
+    var r = buscaReset(p.token);
+    if (!r || r.usado || r.expira < now()) return { valido: false };
+    var u = ctx.store.get('users', r.userId) || {};
+    return { valido: true, usuario: u.usuario, nombre: u.nombre, expira: r.expira, minutos: Math.max(1, Math.round((r.expira - now()) / 60000)) };
+  };
+  A.resetPassword = function (p) {
+    return ctx.store.lock(function () {
+      var nueva = N(p.nueva);
+      if (nueva.length < 6) throw err('La nueva contraseña debe tener al menos 6 caracteres.');
+      var r = buscaReset(p.token);
+      if (!r || r.usado) throw err('El código no es válido o ya fue utilizado. Solicite uno nuevo.');
+      if (r.expira < now()) throw err('El código caducó. Solicite uno nuevo.');
+      var u = ctx.store.get('users', r.userId);
+      if (!u || u.activo === false) throw err('La cuenta no está disponible.');
+      u.salt = ctx.rand(12); u.hash = hashPw(nueva, u.salt); u.fallos = 0; u.bloqueo = 0; u.ultimoCambio = now();
+      ctx.store.put('users', u);
+      r.usado = true; r.usadoEn = now(); ctx.store.put('resets', r);
+      ctx.store.list('resets').forEach(function (x) { if (x.userId === u.id && !x.usado) { x.usado = true; x.revocado = now(); ctx.store.put('resets', x); } });
+      ctx.store.list('sessions').forEach(function (s) { if (s.userId === u.id) ctx.store.remove('sessions', s.id); });
+      ctx.store.put('audit', { id: 'au_' + ctx.rand(8), tipo: 'password_restablecida', usuario: u.usuario, fecha: now() });
+      deliver(enqueue({ canal: 'correo', para: u.email || '', nombre: u.nombre, tipo: 'reset_hecho',
+        asunto: 'Su contraseña fue restablecida', cuerpo: 'La contraseña de la cuenta ' + u.usuario + ' se restableció el ' + fdt(now()) + '. Si no reconoce esta acción, avise de inmediato al coordinador.' }), { tipo: 'reset_hecho' });
+      return { ok: true, usuario: u.usuario };
+    });
+  };
+  A.resetLink = function (p, t) {
+    return ctx.store.lock(function () {
+      var me = session(t); need(me, ['admin']);
+      var u = ctx.store.get('users', p.id); if (!u) throw err('Usuario no encontrado.');
+      var q = enlaceReset(codigoReset());
+      ctx.store.put('resets', { id: 'rs_' + ctx.rand(8), userId: u.id, th: tokHash(q.codigo), creado: now(),
+        expira: now() + RESET_MIN * 60000, usado: false, generadoPor: me.usuario });
+      ctx.store.put('audit', { id: 'au_' + ctx.rand(8), tipo: 'reset_link_generado', usuario: u.usuario, por: me.usuario, fecha: now() });
+      return { usuario: u.usuario, correo: u.email || '', codigo: q.codigo, enlace: q.enlace, minutos: RESET_MIN };
+    });
+  };
   A.logout = function (p, t) { if (t) ctx.store.remove('sessions', t); return { ok: true }; };
   A.me = function (p, t) { return { user: publicUser(session(t)) }; };
   A.changePassword = function (p, t) {

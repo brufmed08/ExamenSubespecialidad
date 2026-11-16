@@ -142,7 +142,7 @@ const core = createCore(EXAM, {
   send: (job, payload) => {
     const u = payload.alumno || {};
     if (job.canal === 'correo') {
-      const pdf = payload.tipo === 'temario' ? temarioPdf(u) : constanciaPdf(u, payload.intento);
+      const pdf = payload.tipo === 'temario' ? temarioPdf(u) : (payload.tipo === 'reset' || payload.tipo === 'reset_hecho' ? null : constanciaPdf(u, payload.intento));
       const nombre = payload.tipo === 'temario' ? 'Temario_' + u.especialidad + '.pdf' : 'Resultado_' + (u.matricula || u.usuario) + '.pdf';
       return sendMail({ to: job.para, subject: job.asunto, text: job.cuerpo + '\n\n' + saludo(payload), pdf, pdfName: nombre });
     }
