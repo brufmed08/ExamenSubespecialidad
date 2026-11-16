@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Evaluación de subespecialidades pediátricas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>:root{
+  --ink:#0c2130;--ink-2:#1b3c52;--muted:#5d7688;--line:#d5e0e5;--line-2:#e8eef1;
+  --paper:#f2f6f7;--card:#fff;--teal:#0a6f6b;--teal-2:#0f8f88;--teal-soft:#e3f2f1;
+  --red:#ab2b22;--red-soft:#fbe9e7;--amber:#8a6200;--amber-soft:#fdf3dc;
+  --shadow:0 1px 2px rgba(12,33,48,.05),0 12px 32px -18px rgba(12,33,48,.28);
+  --r:14px;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --disp:"Archivo","Helvetica Neue",Arial,sans-serif;--body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--disp);margin:0;letter-spacing:-.02em;line-height:1.12}
+button{font-family:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.pt{padding-top:26px;padding-bottom:40px}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.view{display:none}
+.view.on{display:block;animation:rise .3s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.view.on{animation:none}}
+.kick{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:8px}
+.title{font-size:clamp(22px,3vw,30px);font-weight:800;margin-bottom:6px}
+.h3{font-size:16.5px;font-weight:700;margin-bottom:12px}
+.eyebrow{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#8fb4c4;font-weight:600}
+.mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(150deg,var(--teal-2),var(--teal));display:grid;place-items:center;font-family:var(--disp);font-weight:800;color:#fff;font-size:18px;letter-spacing:-.04em;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.mark.lg{width:56px;height:56px;font-size:23px;border-radius:15px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:26px}
+.grid{display:grid;gap:20px}
+.g-2{grid-template-columns:repeat(2,1fr)}
+.g-4{grid-template-columns:repeat(4,1fr)}
+.g-home{grid-template-columns:1.1fr .9fr;align-items:start}
+@media(max-width:900px){.g-home,.g-4{grid-template-columns:1fr 1fr}.g-home{grid-template-columns:1fr}}
+@media(max-width:620px){.g-2,.g-4{grid-template-columns:1fr}}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.head-row{display:flex;gap:16px;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;margin-bottom:20px}
+
+/* forms */
+label.f{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2);margin:0 0 6px}
+.t{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:15px;background:#fdfefe;color:var(--ink);transition:.15s}
+.t:focus{outline:none;border-color:var(--teal-2);box-shadow:0 0 0 4px var(--teal-soft)}
+textarea.t{font-family:var(--mono);font-size:13px;min-height:170px;resize:vertical}
+.field{margin-bottom:15px}
+.pw{position:relative}.pw .t{padding-right:62px}
+.pw-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:none;background:#eef3f5;color:var(--ink-2);font-size:12px;font-weight:700;padding:6px 10px;border-radius:7px;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:10px;padding:11px 18px;font-size:14px;font-weight:700;cursor:pointer;transition:.16s;font-family:var(--body);white-space:nowrap}
+.btn.primary{background:var(--teal);color:#fff}.btn.primary:hover{background:var(--teal-2)}
+.btn.dark{background:var(--ink);color:#fff}.btn.dark:hover{background:var(--ink-2)}
+.btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}.btn.ghost:hover{border-color:var(--ink-2)}
+.btn.danger{background:var(--red-soft);color:var(--red);border:1.5px solid #f0c9c4}
+.btn.sm{padding:7px 12px;font-size:12.5px;border-radius:8px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.lnk{background:none;border:none;color:#9dc4d2;font-size:12px;font-weight:600;cursor:pointer;padding:2px 0}.lnk:hover{color:#fff;text-decoration:underline}
+:focus-visible{outline:2.5px solid var(--teal-2);outline-offset:2px}
+.msg{font-size:13px;font-weight:600;min-height:20px;margin:-4px 0 12px;color:var(--red)}
+.msg.ok{color:var(--teal)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.check input{width:18px;height:18px;accent-color:var(--teal);margin-top:2px;flex:none}
+.check.sm{font-size:13px;margin:0}
+.pill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.pill.ok{background:var(--teal-soft);color:var(--teal)}.pill.no{background:var(--red-soft);color:var(--red)}
+.pill.warn{background:var(--amber-soft);color:var(--amber)}.pill.n{background:#e9eff2;color:var(--ink-2)}
+
+/* auth */
+.auth{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.auth-side{background:var(--ink);color:#e5eff3;padding:56px clamp(28px,6vw,80px);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.ecg-big{position:absolute;left:0;right:0;bottom:12%;width:100%;height:160px;color:#3fbfb6;opacity:.22}
+.auth-title{font-size:clamp(34px,5vw,56px);font-weight:800;color:#fff;margin:14px 0 14px;letter-spacing:-.035em}
+.auth-copy{color:#a9c6d2;margin:0 0 26px;font-size:16px}
+.auth-list{margin:0;padding:0;list-style:none;display:grid;gap:10px;max-width:420px}
+.auth-list li{padding-left:22px;position:relative;color:#cfe0e7;font-size:14px}
+.auth-list li:before{content:"";position:absolute;left:0;top:8px;width:10px;height:2px;background:#3fbfb6}
+.auth-main{display:grid;place-items:center;padding:40px 20px}
+.auth-card{width:100%;max-width:410px}
+@media(max-width:860px){.auth{grid-template-columns:1fr}.auth-side{padding:36px 24px}.auth-list{display:none}.ecg-big{display:none}}
+
+/* top bar */
+header.top{background:var(--ink);color:#eaf2f5;position:sticky;top:0;z-index:40}
+.top-in{display:flex;gap:18px;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center}
+.top-t{font-family:var(--disp);font-weight:700;font-size:16px;color:#fff}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tabs button{background:transparent;border:1px solid transparent;color:#bcd3dc;padding:8px 13px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer}
+.tabs button:hover{background:rgba(255,255,255,.08);color:#fff}
+.tabs button.on{background:var(--teal-2);color:#fff}
+.who{text-align:right}.who-n{font-weight:700;font-size:13.5px}.who-r{font-size:11px;color:#8fb4c4;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+
+/* ladder & rules */
+.ladder{display:flex;gap:8px}
+.ladder b{flex:1;text-align:center;padding:10px 4px;border-radius:9px;font-size:12px;font-weight:700;border:1.5px dashed var(--line);color:var(--muted);background:#fbfdfd}
+.ladder b.used{border-style:solid;background:#eef2f4;color:var(--ink-2)}
+.ladder b.pass{border-style:solid;border-color:var(--teal);background:var(--teal-soft);color:var(--teal)}
+.ladder b.fail{border-style:solid;border-color:#efc4bf;background:var(--red-soft);color:var(--red)}
+.ladder b.now{border-style:solid;border-color:var(--ink);color:var(--ink)}
+.rules{margin:0 0 18px;padding-left:20px;display:grid;gap:9px;font-size:14px;color:var(--ink-2)}
+
+/* exam */
+.exambar{position:sticky;top:0;z-index:30;background:rgba(242,246,247,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 0}
+.exambar-in{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.eb-who{min-width:200px;flex:0 1 auto}.eb-l{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700}.eb-n{font-weight:700;font-size:13.5px}
+.bar{height:8px;background:#e2eaed;border-radius:999px;overflow:hidden;flex:1;min-width:120px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-2));width:0;transition:width .3s}
+.eb-c{font-weight:700;font-size:13px}.eb-t{font-weight:700;font-size:13px;background:var(--ink);color:#fff;padding:5px 10px;border-radius:8px}
+.eb-t.low{background:var(--red)}
+.eb-s{font-size:12px;color:var(--muted);font-weight:600;min-width:70px}
+.lnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.lnav button{border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:7px 11px;font-family:var(--mono);font-weight:700;font-size:12.5px;color:var(--ink-2);cursor:pointer}
+.lnav button.done{border-color:var(--teal);color:var(--teal);background:var(--teal-soft)}
+.lnav button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.lesson-h{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.ltag{font-family:var(--mono);font-size:11.5px;font-weight:700;background:var(--ink);color:#fff;padding:5px 9px;border-radius:7px}
+.ltitle{font-family:var(--disp);font-weight:700;font-size:19px}
+.q{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:12px}
+.qh{display:flex;gap:12px;align-items:flex-start}
+.num{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--teal);min-width:32px;padding-top:1px}
+.stem{font-weight:500;margin:0 0 12px}
+.qimg{display:block;max-width:100%;border:1px solid var(--line-2);border-radius:8px;margin:0 0 12px;pointer-events:none}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:11px;align-items:flex-start;padding:10px 13px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;transition:.14s;background:#fff}
+.opt:hover{border-color:var(--teal-2)}
+.opt input{margin:3px 0 0;accent-color:var(--teal);width:16px;height:16px;flex:none}
+.ol{font-family:var(--mono);font-weight:700;font-size:12.5px;color:var(--muted);min-width:14px}
+.opt.sel{border-color:var(--teal);background:var(--teal-soft)}.opt.sel .ol{color:var(--teal)}
+.opt.correct{border-color:var(--teal);background:#e6f6f4}.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+
+/* protección */
+#v-exam,#v-exam *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#v-exam img{-webkit-user-drag:none;user-drag:none}
+.wm{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
+.wm span{position:absolute;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:15px;color:rgba(12,33,48,.085);transform:rotate(-24deg);transform-origin:left top}
+.wm-badge{position:fixed;z-index:26;pointer-events:none;font-family:var(--mono);font-size:12px;font-weight:700;color:rgba(171,43,34,.55);border:1.5px solid rgba(171,43,34,.35);background:rgba(255,255,255,.55);padding:5px 9px;border-radius:7px;transition:left 2.5s ease,top 2.5s ease;white-space:nowrap}
+body.veiled #v-exam .wrap{filter:blur(18px);opacity:.25}
+.shield{position:fixed;inset:0;z-index:90;background:rgba(12,33,48,.97);color:#fff;display:none;place-items:center;text-align:center;padding:24px}
+.shield.on{display:grid}
+.shield-in{max-width:460px;display:flex;flex-direction:column;align-items:center}
+.shield h2{font-size:28px;margin-bottom:10px}
+.shield p{color:#bcd3dc;margin:0 0 12px}
+.shield-who{font-family:var(--mono);font-weight:700;color:#fff!important;background:rgba(255,255,255,.08);padding:8px 14px;border-radius:9px}
+.noprint-msg{display:none}
+
+/* result */
+.stamp{border:2px dashed var(--teal);border-radius:12px;padding:14px 20px;text-align:center;background:linear-gradient(180deg,#f4fbfa,#eaf5f4);min-width:210px}
+.stamp .lab{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:700}
+.stamp .val{font-family:var(--mono);font-weight:700;font-size:20px;word-break:break-all}
+.big{font-family:var(--disp);font-weight:800;font-size:58px;line-height:1;letter-spacing:-.04em}
+.bars{display:grid;gap:9px}
+.brow{display:grid;grid-template-columns:minmax(120px,240px) 1fr 50px;gap:12px;align-items:center;font-size:12.5px}
+.bn{font-weight:600;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bt{height:15px;border-radius:6px;background:#e8eef1;overflow:hidden;position:relative}
+.bt i{display:block;height:100%;border-radius:6px}
+.bt:after{content:"";position:absolute;left:80%;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.35}
+.bv{font-family:var(--mono);font-weight:700;text-align:right}
+
+/* stats & tables */
+.stats{margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow)}
+.stat .n{font-family:var(--disp);font-weight:800;font-size:30px;letter-spacing:-.03em;line-height:1}
+.stat .l{font-size:12px;color:var(--muted);margin-top:6px;font-weight:600}
+.filters{margin-bottom:14px}.filters .t{max-width:320px}.filters select.t{max-width:210px}
+.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:860px}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line-2);white-space:nowrap}
+th{background:#f6f9fa;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;position:sticky;top:0}
+tbody tr:hover{background:#fafcfd}
+td.act{text-align:right}
+.empty{padding:44px 20px;text-align:center;color:var(--muted)}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px;font-family:var(--disp)}
+.note{font-size:12.5px;color:var(--ink-2);border-left:3px solid var(--teal-2);padding:9px 14px;background:#f2f9f9;border-radius:0 8px 8px 0}
+
+/* modal, toast, loading */
+.modal{position:fixed;inset:0;background:rgba(12,33,48,.55);z-index:80;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
+.modal.on{display:flex}
+.modal-box{background:#fff;border-radius:16px;width:100%;max-width:640px;box-shadow:0 30px 70px -20px rgba(0,0,0,.45)}
+.modal-box.wide{max-width:980px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--line-2)}
+.modal-head h3{font-size:18px}
+.x{border:none;background:#eef3f5;width:32px;height:32px;border-radius:8px;font-size:20px;cursor:pointer;color:var(--ink-2)}
+.modal-body{padding:22px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:11px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:90vw}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.toast.err{background:var(--red)}
+.loading{position:fixed;inset:0;z-index:95;display:none;place-items:center;background:rgba(242,246,247,.55)}
+.loading.on{display:grid}
+.spin{width:38px;height:38px;border-radius:50%;border:4px solid var(--teal-soft);border-top-color:var(--teal);animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.cred{font-family:var(--mono);font-size:13px;background:#f6f9fa;border:1px solid var(--line);border-radius:10px;padding:12px 14px;line-height:1.8}
+
+@media print{
+  body *{display:none!important}
+  body:after{content:"La impresión de este sistema no está permitida.";display:block!important;font:700 20px sans-serif;padding:40px}
+}
+
+.specpick{display:grid;gap:8px;max-height:300px;overflow:auto;margin-bottom:15px}
+.specpick label{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:14px}
+.specpick label:hover{border-color:var(--teal-2)}
+.specpick input{margin-top:3px;accent-color:var(--teal)}
+.specpick b{display:block;font-size:14px}.specpick span{font-size:12px;color:var(--muted)}
+.legal{background:#fbfdfd;border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:13.5px;line-height:1.6;max-height:340px;overflow:auto}
+.legal h4{font-family:var(--disp);font-size:14px;margin:14px 0 6px;color:var(--ink)}
+.legal p{margin:0 0 8px}.legal ul{margin:0 0 8px;padding-left:18px}
+.sign{display:grid;gap:12px;margin-top:16px}
+.sigbox{border-bottom:2px solid var(--ink);padding:10px 4px;font-family:"Segoe Script","Bradley Hand",cursive;font-size:20px;min-height:44px}
+.docbadge{display:inline-block;background:var(--teal-soft);color:var(--teal);font-weight:700;font-size:11.5px;padding:4px 10px;border-radius:999px;margin-bottom:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+.arealist{display:grid;gap:10px}
+.area{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
+.area.good{border-left:4px solid var(--teal)}.area.bad{border-left:4px solid var(--red)}
+.area h5{margin:0 0 4px;font-family:var(--disp);font-size:14px}
+.area .pct{font-family:var(--mono);font-weight:700;font-size:12px;color:var(--muted)}
+.area ul{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--ink-2)}
+.area li{margin-bottom:3px}
+.biblio{font-size:12px;color:var(--muted);margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
+.notif{font-size:12.5px;border-radius:8px;padding:8px 12px;margin-top:6px;background:#f4f8f9;border:1px solid var(--line)}
+.notif.ok{background:var(--teal-soft);border-color:#bfe0dd;color:var(--teal)}
+.notif.err{background:var(--red-soft);border-color:#f0c9c4;color:var(--red)}
+.final{background:var(--ink);color:#fff;border-radius:14px;padding:20px 24px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.final .n{font-family:var(--disp);font-weight:800;font-size:46px;line-height:1}
+.final small{color:#9dbbc9;display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+</style>
+</head>
+<body>
+<noscript><div style="padding:40px;font-family:sans-serif">Active JavaScript para usar el sistema.</div></noscript>
+
+<section class="view" id="v-login"><div class="auth">
+  <div class="auth-side">
+    <svg class="ecg-big" viewBox="0 0 600 160" preserveAspectRatio="none" aria-hidden="true"><path d="M0,80 L150,80 L168,80 L178,40 L192,124 L206,80 L260,80 L330,80 L346,80 L356,46 L370,118 L384,80 L600,80" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+    <div class="mark lg">SP</div>
+    <div class="eyebrow">Evaluación de conocimientos · subespecialidades pediátricas</div>
+    <h1 class="auth-title">Examen de<br>subespecialidad</h1>
+    <p class="auth-copy">Neonatología · Gastroenterología pediátrica · Paciente crítico · Oncología pediátrica · Cirugía pediátrica</p>
+    <ul class="auth-list">
+      <li>Reactivos de PREP® Self-Assessment 2021 (AAP).</li>
+      <li>Calificación de 1 a 100 · mínimo aprobatorio 60.</li>
+      <li>Resultado automático, definitivo e inapelable.</li>
+    </ul>
+  </div>
+  <div class="auth-main">
+    <form id="f-login" class="auth-card">
+      <div class="kick">Acceso</div><h2 class="title">Iniciar sesión</h2>
+      <p class="muted" style="margin:0 0 20px">Entre con su correo de Google o, si su coordinador le asignó usuario y contraseña, con esos datos.</p>
+      <div class="field"><label class="f" for="lg-u">Usuario o correo</label><input id="lg-u" class="t" autocapitalize="none" spellcheck="false" required></div>
+      <div class="field"><label class="f" for="lg-p">Contraseña</label><div class="pw"><input id="lg-p" type="password" class="t" required><button type="button" class="pw-eye" data-eye="lg-p">Ver</button></div></div>
+      <div class="msg" id="lg-msg"></div>
+      <button class="btn primary block">Entrar</button>
+      <div id="g-slot" style="display:none;margin-top:16px">
+        <div class="or"><span>o bien</span></div>
+        <div id="g-btn"></div>
+        <p class="muted" style="font-size:12px;margin:10px 0 0">Acceso con correo de Google. Su correo debe estar inscrito por el coordinador.</p>
+      </div>
+    </form>
+    <form id="f-setup" class="auth-card" style="display:none">
+      <div class="kick">Configuración inicial</div><h2 class="title">Crear administrador</h2>
+      <p class="muted" style="margin:0 0 18px">Primera apertura del sistema: cree la cuenta del coordinador.</p>
+      <div class="grid g-2"><div class="field"><label class="f">Nombre(s)</label><input id="su-n" class="t" required></div><div class="field"><label class="f">Apellidos</label><input id="su-a" class="t"></div></div>
+      <div class="field"><label class="f">Usuario</label><input id="su-u" class="t" placeholder="coordinador" required></div>
+      <div class="field"><label class="f">Contraseña (mín. 6)</label><input id="su-p" type="password" class="t" required></div>
+      <div class="msg" id="su-msg"></div><button class="btn primary block">Crear administrador</button>
+    </form>
+  </div>
+</div></section>
+
+<header class="top" id="topbar" style="display:none"><div class="wrap top-in">
+  <div class="brand"><div class="mark">SP</div><div><div class="eyebrow">Subespecialidades pediátricas</div><div class="top-t" id="top-t">Evaluación</div></div></div>
+  <nav class="tabs" id="tabs"></nav>
+  <div class="who"><div class="who-n" id="who-n"></div><div class="who-r" id="who-r"></div>
+    <div class="row" style="gap:6px;justify-content:flex-end"><button class="lnk" id="btn-pw">Contraseña</button><button class="lnk" id="btn-out">Salir</button></div></div>
+</div></header>
+
+<section class="view" id="v-consent"><div class="wrap pt" style="max-width:900px">
+  <div class="card pad">
+    <div class="docbadge">Paso 1 de 3 · Consentimiento informado</div>
+    <h2 class="title">Consentimiento y aceptación del resultado</h2>
+    <p class="muted" style="margin:0 0 16px" id="cs-meta"></p>
+    <div class="legal" id="cs-text"></div>
+    <div class="sign">
+      <label class="check"><input type="checkbox" id="cs-ok"><span>Acepto lo anterior y entiendo que el resultado es definitivo e inapelable.</span></label>
+      <div class="field" style="margin:8px 0 0"><label class="f">Nombre completo (firma electrónica)</label><input id="cs-name" class="t" autocomplete="off" placeholder="Como aparece en su registro"></div>
+      <div class="msg" id="cs-msg"></div>
+      <button class="btn primary" id="cs-go">Firmar y continuar</button>
+    </div>
+  </div>
+</div></section>
+
+<section class="view" id="v-shome"><div class="wrap pt">
+  <div class="grid g-home">
+    <div class="card pad">
+      <div class="kick">Alumno</div><h2 class="title" id="sh-name"></h2>
+      <div class="row" style="margin:6px 0 18px"><span class="pill n mono" id="sh-mat"></span><span class="pill ok" id="sh-spec"></span></div>
+      <h3 class="h3">Su evaluación</h3>
+      <div class="ladder" id="sh-ladder"></div>
+      <p class="muted" id="sh-msg" style="margin:14px 0 18px"></p>
+      <div class="row"><button class="btn primary" id="sh-start">Comenzar examen</button><button class="btn ghost" id="sh-temario">Descargar temario (PDF)</button></div>
+    </div>
+    <div class="card pad">
+      <h3 class="h3">Reglas de la evaluación</h3>
+      <ol class="rules">
+        <li>Calificación de <b>1 a 100</b> proporcional a sus reactivos correctos; <b>mínimo aprobatorio 60</b>.</li>
+        <li>El resultado se calcula y emite <b>automáticamente</b> al finalizar; <b>no puede modificarse ni apelarse</b>.</li>
+        <li>El examen lleva su nombre y matrícula en pantalla; copiar, fotografiar o reproducir reactivos está prohibido.</li>
+        <li>Al terminar deberá firmar el <b>acuerdo de confidencialidad</b>.</li>
+        <li>Su jefe de servicio y el titular de la especialidad reciben el resultado por correo y WhatsApp.</li>
+      </ol>
+    </div>
+  </div>
+</div></section>
+
+<section class="view" id="v-exam">
+  <div class="exambar"><div class="wrap exambar-in">
+    <div class="eb-who"><div class="eb-l">Presenta</div><div class="eb-n" id="ex-who"></div></div>
+    <div class="bar"><i id="ex-prog"></i></div>
+    <div class="mono eb-c" id="ex-count">0 / 0</div>
+    <div class="eb-s" id="ex-save">Guardado</div>
+    <button class="btn dark sm" id="ex-finish">Finalizar</button>
+  </div></div>
+  <div class="wrap pt" id="ex-body"></div>
+  <div id="wm" class="wm" aria-hidden="true"></div>
+  <div id="wm-badge" class="wm-badge" aria-hidden="true"></div>
+</section>
+
+<div id="shield" class="shield"><div class="shield-in">
+  <div class="mark lg">SP</div><h2>Examen oculto</h2>
+  <p id="shield-msg">Se detectó que salió de la ventana del examen.</p>
+  <p class="shield-who" id="shield-who"></p>
+  <button class="btn primary" id="shield-back">Volver al examen</button>
+</div></div>
+
+<section class="view" id="v-result"><div class="wrap pt" id="res-body"></div></section>
+
+<section class="view" id="v-results"><div class="wrap pt">
+  <div class="head-row"><div><div class="kick">Calificaciones</div><h2 class="title">Resultados</h2><p class="muted" style="margin:0">Resultados emitidos automáticamente. No son editables.</p></div>
+  <div class="row"><button class="btn dark" id="r-acta">Acta por subespecialidad</button><button class="btn dark" id="r-exp">Expediente (5 actas)</button><button class="btn primary" id="r-xlsx">Descargar Excel</button><button class="btn ghost" id="r-refresh">Actualizar</button></div></div>
+  <div class="grid g-4 stats" id="r-stats"></div>
+  <div class="row filters"><input id="r-q" class="t" placeholder="Buscar nombre, matrícula o especialidad…"><select id="r-spec" class="t"><option value="">Todas las especialidades</option></select></div>
+  <div class="tblwrap"><table><thead><tr><th>Matrícula</th><th>Alumno</th><th>Especialidad</th><th>Aciertos</th><th>Calificación</th><th>Estatus</th><th>Emitido</th><th></th></tr></thead><tbody id="r-tb"></tbody></table></div>
+</div></section>
+
+<section class="view" id="v-students"><div class="wrap pt">
+  <div class="head-row"><div><div class="kick">Inscripción</div><h2 class="title">Sustentantes</h2><p class="muted" style="margin:0">Al inscribir se envía por correo el temario en PDF con temas y bibliografía.</p></div>
+  <div class="row"><button class="btn primary" id="s-new">Inscribir sustentante</button><button class="btn dark" id="s-bulk">Alta masiva</button></div></div>
+  <div class="row filters"><input id="s-q" class="t" placeholder="Buscar…"><span class="pill n" id="s-count"></span></div>
+  <div class="tblwrap"><table><thead><tr><th>Matrícula</th><th>Alumno</th><th>Especialidad</th><th>Correo</th><th>Calificación</th><th>Estatus</th><th></th></tr></thead><tbody id="s-tb"></tbody></table></div>
+</div></section>
+
+<section class="view" id="v-config"><div class="wrap pt">
+  <div class="kick">Administración</div><h2 class="title">Especialidades y reglas</h2>
+  <div class="grid g-2" style="margin-top:18px">
+    <form class="card pad" id="f-gen">
+      <h3 class="h3">Reglas generales</h3>
+      <div class="grid g-2">
+        <div class="field"><label class="f">Calificación mínima aprobatoria</label><input id="st-min" type="number" min="1" max="100" class="t"></div>
+        <div class="field"><label class="f">Oportunidades por sustentante</label><input id="st-int" type="number" min="1" max="5" class="t"></div>
+      </div>
+      <div class="msg" id="st-msg"></div>
+      <button class="btn primary">Guardar reglas</button>
+      <div class="note" style="margin-top:16px">El resultado se emite al finalizar y queda bloqueado. Para un examen de certificación se recomienda <b>1 oportunidad</b>.</div>
+    </form>
+    <div class="card pad"><h3 class="h3">Canales de notificación</h3><div id="ch-info" class="muted" style="font-size:13px"></div>
+      <div class="note" style="margin-top:12px">Correo: SMTP o MailApp de Google. WhatsApp: CallMeBot o WhatsApp Cloud API (Meta). Si no hay credenciales, el sistema funciona en modo simulación y registra el envío en la bitácora.</div></div>
+  </div>
+  <div class="card pad" style="margin-top:20px"><h3 class="h3">Jefes de servicio y titulares por especialidad</h3>
+    <div id="cfg-specs"></div>
+    <div class="row" style="margin-top:14px"><button class="btn primary" id="cfg-save">Guardar destinatarios</button><span class="msg" id="cfg-msg" style="margin:0"></span></div>
+    <div class="note" style="margin-top:14px">Estos destinatarios reciben por correo y WhatsApp el resultado de cada sustentante de su especialidad.</div>
+  </div>
+  <div class="card pad" id="folio-card" style="margin-top:20px">
+    <h3 class="h3">Folios de los documentos</h3>
+    <p class="muted" style="font-size:13px;margin:0 0 12px">Numeración consecutiva por tipo de documento y por subespecialidad, con el año en curso. Se puede reiniciar; los documentos ya emitidos conservan su folio y su fecha, y las reimpresiones reutilizan los originales.</p>
+    <div class="tblwrap"><table style="min-width:0"><thead><tr><th>Documento</th><th>Prefijo</th><th>Emitidos</th><th>Siguiente folio</th></tr></thead><tbody id="folio-tb"></tbody></table></div>
+    <div class="row" style="margin-top:14px">
+      <select id="rf-tipo" class="t" style="max-width:230px"><option value="todo">Todos los documentos</option><option value="acta">Actas</option><option value="expediente">Expedientes</option><option value="constancia">Constancias</option></select>
+      <select id="rf-esp" class="t" style="max-width:260px"><option value="">Todas las subespecialidades</option></select>
+      <button class="btn danger sm" id="rf-go">Reiniciar numeración</button>
+    </div>
+  </div>
+  <div class="card pad" id="actas-card" style="margin-top:20px">
+    <h3 class="h3">Registro de actas emitidas</h3>
+    <p class="muted" style="font-size:13px;margin:0 0 12px">Cada acta fija su folio y su fecha en la primera emisión. Si se vuelve a generar sin cambios, se reimprime el original: mismo folio, misma fecha y misma huella SHA-256. Si el contenido cambia, se emite un acta nueva con folio nuevo.</p>
+    <div class="tblwrap"><table style="min-width:0"><thead><tr><th>Folio</th><th>Subespecialidad</th><th>Fecha de emisión</th><th>Huella SHA-256</th><th>Tipo</th><th>Reimpr.</th><th>Última reimpresión</th></tr></thead><tbody id="actas-tb"></tbody></table></div>
+  </div>
+  <div class="card pad" id="diag-card" style="margin-top:20px;display:none">
+    <h3 class="h3">Diagnóstico de calificaciones</h3>
+    <p class="muted" id="diag-info" style="font-size:13px;margin:0 0 12px"></p>
+    <div id="diag-list"></div>
+  </div>
+</div></section>
+
+<section class="view" id="v-notifs"><div class="wrap pt">
+  <div class="head-row"><div><div class="kick">Bitácora</div><h2 class="title">Notificaciones y firmas</h2><p class="muted" style="margin:0">Envíos de correo y WhatsApp, y firmas de consentimiento y confidencialidad.</p></div>
+  <div class="row"><button class="btn ghost" id="n-refresh">Actualizar</button></div></div>
+  <h3 class="h3">Envíos</h3>
+  <div class="tblwrap"><table><thead><tr><th>Fecha</th><th>Canal</th><th>Destinatario</th><th>Tipo</th><th>Estado</th><th>Detalle</th><th></th></tr></thead><tbody id="n-tb"></tbody></table></div>
+  <h3 class="h3" style="margin-top:26px">Constancias de corrección</h3>
+  <div class="tblwrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Subespecialidad</th><th>Exámenes</th><th>Motivo</th><th>Autorizó</th><th></th></tr></thead><tbody id="k-tb"></tbody></table></div>
+  <h3 class="h3" style="margin-top:26px">Firmas</h3>
+  <div class="tblwrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Alumno</th><th>Matrícula</th><th>Especialidad</th><th>Firma</th><th>Huella</th></tr></thead><tbody id="c-tb"></tbody></table></div>
+</div></section>
+
+<div class="modal" id="modal"><div class="modal-box" role="dialog" aria-modal="true">
+  <div class="modal-head"><h3 id="m-title"></h3><button class="x" id="m-x">×</button></div>
+  <div class="modal-body" id="m-body"></div>
+</div></div>
+<div class="toast" id="toast"></div>
+<div class="loading" id="loading"><div class="spin"></div></div>
+
+<script>(function () {
+'use strict';
+var $ = function (s, r) { return (r || document).querySelector(s); };
+var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+function h(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function p2(n) { return String(n).padStart(2, '0'); }
+function fdt(t) { if (!t) return ''; var d = new Date(t); return p2(d.getDate()) + '/' + p2(d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + p2(d.getHours()) + ':' + p2(d.getMinutes()); }
+function fname() { var d = new Date(); return d.getFullYear() + p2(d.getMonth() + 1) + p2(d.getDate()) + '_' + p2(d.getHours()) + p2(d.getMinutes()); }
+var tt; function toast(m, bad) { var t = $('#toast'); t.textContent = m; t.className = 'toast on' + (bad ? ' err' : ''); clearTimeout(tt); tt = setTimeout(function () { t.className = 'toast'; }, 3600); }
+function loading(on) { $('#loading').classList.toggle('on', !!on); }
+function rndPw() { var a = 'abcdefghjkmnpqrstuvwxyz23456789', s = '', b = new Uint32Array(8); crypto.getRandomValues(b); for (var i = 0; i < 8; i++) s += a[b[i] % a.length]; return s; }
+
+var TOKEN = '', ME = null, STATUS = null;
+try { TOKEN = sessionStorage.getItem('subsp_tok') || ''; } catch (e) {}
+function setTok(t) { TOKEN = t || ''; try { if (t) sessionStorage.setItem('subsp_tok', t); else sessionStorage.removeItem('subsp_tok'); } catch (e) {} }
+var IS_GAS = !!(window.google && google.script && google.script.run);
+function call(action, params, quiet) {
+  if (!quiet) loading(true);
+  return new Promise(function (res, rej) {
+    function done(o) {
+      if (!quiet) loading(false);
+      if (o && o.ok) return res(o.data);
+      var e = o || { error: 'Error desconocido.' };
+      if (e.code === 'AUTH' && action !== 'login') { setTok(''); ME = null; showLogin(); }
+      rej(e);
+    }
+    if (IS_GAS) google.script.run.withSuccessHandler(function (s) { try { done(JSON.parse(s)); } catch (x) { done({ error: 'Respuesta inválida.' }); } })
+      .withFailureHandler(function (er) { done({ error: 'Error del servidor: ' + (er && er.message || er) }); }).api(action, params || {}, TOKEN);
+    else fetch('api', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + TOKEN }, body: JSON.stringify({ action: action, params: params || {} }), cache: 'no-store' })
+      .then(function (r) { return r.json(); }).then(done).catch(function () { done({ error: 'Sin conexión con el servidor.', code: 'NET' }); });
+  });
+}
+function fail(e) { toast((e && e.error) || 'Ocurrió un error.', true); }
+
+function show(id) { $$('.view').forEach(function (v) { v.classList.remove('on'); }); $('#v-' + id).classList.add('on'); $$('#tabs button').forEach(function (b) { b.classList.toggle('on', b.dataset.v === id); }); window.scrollTo(0, 0); }
+var TABS = { admin: [['results', 'Resultados'], ['students', 'Sustentantes'], ['config', 'Especialidades'], ['notifs', 'Bitácora']], calificador: [['results', 'Resultados'], ['students', 'Sustentantes'], ['notifs', 'Bitácora']] };
+var ROLES = { admin: 'Administrador', calificador: 'Calificador', alumno: 'Sustentante' };
+
+function initGoogle() {
+  call('loginConfig', {}, true).then(function (cfg) {
+    if (!cfg || !cfg.googleClientId) return;
+    var slot = $('#g-slot'); if (slot) slot.style.display = 'block';
+    var s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client'; s.async = true; s.defer = true;
+    s.onload = function () {
+      if (!window.google || !google.accounts) return;
+      google.accounts.id.initialize({ client_id: cfg.googleClientId, callback: onGoogleCredential, auto_select: false, cancel_on_tap_outside: true });
+      google.accounts.id.renderButton($('#g-btn'), { theme: 'outline', size: 'large', text: 'signin_with', shape: 'rectangular', logo_alignment: 'left', width: 320 });
+    };
+    document.body.appendChild(s);
+  }).catch(function () {});
+}
+function onGoogleCredential(res) {
+  if (!res || !res.credential) return;
+  call('googleLogin', { credential: res.credential }).then(function (d) {
+    setTok(d.token); enter(d.user);
+    toast('Bienvenido, ' + (d.user.nombre || d.user.usuario) + '.');
+  }).catch(fail);
+}
+function showLogin() {
+  guard.stop(); $('#topbar').style.display = 'none'; show('login');
+  call('status', {}, true).then(function (s) {
+    STATUS = s;
+    $('#f-setup').style.display = s.needsSetup ? '' : 'none';
+    $('#f-login').style.display = s.needsSetup ? 'none' : '';
+    setTimeout(function () { (s.needsSetup ? $('#su-n') : $('#lg-u')).focus(); }, 60);
+  }).catch(function (e) { $('#lg-msg').textContent = e.error || 'No se pudo contactar al servidor.'; });
+}
+function enter(u) {
+  ME = u; $('#topbar').style.display = '';
+  $('#who-n').textContent = (u.nombre + ' ' + (u.apellidos || '')).trim();
+  $('#who-r').textContent = ROLES[u.rol];
+  $('#tabs').innerHTML = (TABS[u.rol] || []).map(function (t) { return '<button data-v="' + t[0] + '">' + t[1] + '</button>'; }).join('');
+  if (!STATUS) call('status', {}, true).then(function (s) { STATUS = s; }).catch(function () {});
+  if (u.rol === 'alumno') studentHome(); else openTab(u.rol === 'admin' ? 'results' : 'results');
+}
+$('#tabs').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) openTab(b.dataset.v); });
+function openTab(v) { show(v); if (v === 'results') loadResults(); if (v === 'students') loadStudents(); if (v === 'config') loadConfig(); if (v === 'notifs') loadNotifs(); }
+
+$$('[data-eye]').forEach(function (b) { b.onclick = function () { var i = $('#' + b.dataset.eye); i.type = i.type === 'password' ? 'text' : 'password'; b.textContent = i.type === 'password' ? 'Ver' : 'Ocultar'; }; });
+$('#f-login').addEventListener('submit', function (e) {
+  e.preventDefault(); $('#lg-msg').textContent = '';
+  call('login', { usuario: $('#lg-u').value, password: $('#lg-p').value }).then(function (d) { setTok(d.token); $('#lg-p').value = ''; enter(d.user); })
+    .catch(function (er) { $('#lg-msg').textContent = er.error; });
+});
+$('#f-setup').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var u = $('#su-u').value, p = $('#su-p').value;
+  call('setup', { nombre: $('#su-n').value, apellidos: $('#su-a').value, usuario: u, password: p })
+    .then(function () { return call('login', { usuario: u, password: p }); })
+    .then(function (d) { setTok(d.token); enter(d.user); toast('Administrador creado. Configure especialidades y destinatarios.'); })
+    .catch(function (er) { $('#su-msg').textContent = er.error; });
+});
+$('#btn-out').onclick = function () { call('logout', {}, true).catch(function () {}); setTok(''); ME = null; EX.active = false; showLogin(); };
+$('#btn-pw').onclick = function () {
+  modal('Cambiar contraseña', '<form id="f-pw"><div class="field"><label class="f">Contraseña actual</label><input type="password" class="t" id="pw-a" required></div><div class="field"><label class="f">Nueva (mín. 6)</label><input type="password" class="t" id="pw-n" required></div><div class="msg" id="pw-m"></div><button class="btn primary">Guardar</button></form>');
+  $('#f-pw').onsubmit = function (e) { e.preventDefault(); call('changePassword', { actual: $('#pw-a').value, nueva: $('#pw-n').value }).then(function () { closeModal(); toast('Contraseña actualizada.'); }).catch(function (er) { $('#pw-m').textContent = er.error; }); };
+};
+function modal(t, b, wide) { $('#m-title').textContent = t; $('#m-body').innerHTML = b; $('.modal-box').classList.toggle('wide', !!wide); $('#modal').classList.add('on'); }
+function closeModal() { $('#modal').classList.remove('on'); $('#m-body').innerHTML = ''; }
+$('#m-x').onclick = closeModal;
+$('#modal').onclick = function (e) { if (e.target.id === 'modal') closeModal(); };
+
+/* ================= ALUMNO ================= */
+var ST = null, EX = { active: false }, SP = null;
+function studentHome() {
+  guard.stop(); show('shome');
+  call('myStatus').then(function (s) {
+    ST = s; SP = s.especialidad;
+    $('#sh-name').textContent = s.user.apellidos + ', ' + s.user.nombre;
+    $('#sh-mat').textContent = 'Matrícula ' + s.user.matricula;
+    $('#sh-spec').textContent = s.especialidad.nombre + ' · ' + s.especialidad.items.length + ' reactivos';
+    var lad = '';
+    for (var i = 1; i <= s.max; i++) {
+      var done = s.usados >= i;
+      lad += '<b class="' + (done ? (s.resultado && s.resultado.estatus === 'APROBADO' ? 'pass' : 'fail') : (i === s.usados + 1 ? 'now' : '')) + '">Oportunidad ' + i + (done && s.resultado ? ' · ' + s.resultado.calificacion : '') + '</b>';
+    }
+    $('#sh-ladder').innerHTML = lad;
+    var btn = $('#sh-start');
+    if (s.resultado) {
+      $('#sh-msg').innerHTML = 'Resultado emitido: <b>' + s.resultado.calificacion + '/100 · ' + s.resultado.estatus + '</b>. El resultado es definitivo e inapelable.';
+      btn.textContent = 'Ver mi resultado y debriefing';
+      btn.onclick = function () { renderResult(s.resultado); };
+    } else if (s.restantes <= 0) {
+      $('#sh-msg').textContent = 'Sin oportunidades disponibles.'; btn.style.display = 'none';
+    } else {
+      $('#sh-msg').innerHTML = 'Calificación mínima aprobatoria: <b>' + s.minimo + '/100</b>. Al finalizar verá su resultado de inmediato y deberá firmar el acuerdo de confidencialidad.';
+      btn.style.display = ''; btn.textContent = s.enCurso ? 'Continuar examen' : 'Comenzar examen';
+      btn.onclick = function () {
+        if (!confirm('Se registrará el inicio del examen. El resultado se emitirá al finalizar y no podrá modificarse. ¿Continuar?')) return;
+        call('startAttempt').then(beginExam).catch(fail);
+      };
+    }
+    if (!s.consentimiento) showConsent();
+  }).catch(fail);
+}
+function showConsent() {
+  call('consentText').then(function (c) {
+    $('#cs-meta').textContent = ST.especialidad.nombre + ' · ' + ST.especialidad.items.length + ' reactivos · mínimo aprobatorio ' + ST.minimo + '/100';
+    $('#cs-text').innerHTML =
+      '<p><b>Evaluación de conocimientos de subespecialidad pediátrica.</b> Al firmar este documento usted declara que ha leído y acepta las condiciones de aplicación de la evaluación.</p>' +
+      '<h4>1. Objeto</h4><p>La evaluación mide conocimientos mediante reactivos de opción múltiple seleccionados de PREP® Self-Assessment 2021 (AAP), correspondientes a ' + h(ST.especialidad.nombre) + '.</p>' +
+      '<h4>2. Calificación</h4><p>La calificación se expresa en escala de <b>1 a 100</b>, proporcional al número de reactivos correctos, y se considera aprobatoria únicamente si es <b>igual o mayor a ' + ST.minimo + '</b>.</p>' +
+      '<h4>3. Emisión automática</h4><p>El resultado se calcula y emite <b>automáticamente</b> al concluir el examen, se muestra de forma inmediata y se envía por correo electrónico y WhatsApp al jefe de servicio y al titular de la especialidad.</p>' +
+      '<h4>4. Carácter definitivo e inapelable</h4><p>Usted acepta que, una vez emitido, el resultado <b>es definitivo, inapelable y no puede modificarse, corregirse ni recalificarse</b>, y que no procede recurso alguno contra él.</p>' +
+      '<h4>5. Integridad</h4><p>La evaluación se aplica en un entorno controlado; se registran incidentes como salidas de la ventana o intentos de captura de pantalla, que quedan a disposición de la autoridad académica.</p>' +
+      '<h4>6. Confidencialidad</h4><p>Al finalizar, usted firmará un acuerdo de confidencialidad en el que se obliga a no divulgar, fotografiar ni reproducir los reactivos.</p>' +
+      '<p class="muted" style="font-size:12px">Versión del documento: ' + h(c.version) + ' · ' + fdt(Date.now()) + '</p>';
+    $('#cs-name').placeholder = ST.user.nombre + ' ' + ST.user.apellidos;
+    show('consent');
+    $('#cs-go').onclick = function () {
+      if (!$('#cs-ok').checked) { $('#cs-msg').textContent = 'Marque la casilla de aceptación.'; return; }
+      if (!$('#cs-name').value.trim()) { $('#cs-msg').textContent = 'Escriba su nombre completo como firma.'; return; }
+      call('signConsent', { acepta: true, nombreCompleto: $('#cs-name').value, textoAceptado: $('.legal').innerText.slice(0, 700) })
+        .then(function () { toast('Consentimiento firmado.'); studentHome(); }).catch(function (er) { $('#cs-msg').textContent = er.error; });
+    };
+  }).catch(fail);
+}
+$('#sh-temario').onclick = function () {
+  call('myPdf', { tipo: 'temario' }).then(function (d) { dlb64(d.base64, d.nombre); }).catch(fail);
+};
+
+function beginExam(d) {
+  EX = { active: true, id: d.attemptId, num: d.num, qs: d.questions, ans: Object.assign({}, d.respuestas || {}), pending: {}, minimo: d.minimo };
+  $('#ex-who').textContent = d.alumno.apellidos + ', ' + d.alumno.nombre + ' · ' + d.alumno.matricula + ' · ' + d.especialidad.nombre;
+  $('#shield-who').textContent = d.alumno.apellidos + ', ' + d.alumno.nombre + ' · ' + d.alumno.matricula;
+  show('exam'); renderExam(); guard.start();
+}
+function renderExam() {
+  var html = '';
+  EX.qs.forEach(function (q) {
+    var opts = q.options.map(function (o, i) {
+      var l = 'abcd'[i], sel = EX.ans[q.n] === l;
+      return '<label class="opt' + (sel ? ' sel' : '') + '"><input type="radio" name="q' + q.n + '" value="' + l + '"' + (sel ? ' checked' : '') + '><span class="ol">' + l + '</span><span>' + h(o) + '</span></label>';
+    }).join('');
+    html += '<div class="q"><div class="qh"><div class="num">' + q.n + '</div><div style="flex:1;min-width:0"><div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px">' + h(q.m) + '</div>' +
+      '<p class="stem">' + h(q.stem) + '</p><div class="opts">' + opts + '</div></div></div></div>';
+  });
+  html += '<div class="row" style="justify-content:center;margin:20px 0 50px"><button class="btn primary" id="ex-finish2">Finalizar y ver mi resultado</button></div>';
+  $('#ex-body').innerHTML = html;
+  $('#ex-finish2').onclick = finishAsk;
+  prog();
+}
+$('#ex-body').addEventListener('change', function (e) {
+  if (e.target.type !== 'radio') return;
+  var n = e.target.name.slice(1); EX.ans[n] = e.target.value; EX.pending[n] = e.target.value;
+  $$('input[name="q' + n + '"]').forEach(function (r) { r.closest('.opt').classList.toggle('sel', r.checked); });
+  prog(); saveSoon();
+});
+function prog() { var c = Object.keys(EX.ans).length, t = EX.qs.length; $('#ex-prog').style.width = (c / t * 100) + '%'; $('#ex-count').textContent = c + ' / ' + t; }
+var sv;
+function saveSoon() { $('#ex-save').textContent = 'Guardando…'; clearTimeout(sv); sv = setTimeout(flushSave, 1200); }
+function flushSave() {
+  if (!EX.active) return;
+  var b = EX.pending; if (!Object.keys(b).length) { $('#ex-save').textContent = 'Guardado'; return; }
+  EX.pending = {};
+  call('saveAnswers', { attemptId: EX.id, respuestas: b }, true).then(function () { $('#ex-save').textContent = 'Guardado'; })
+    .catch(function (e) { for (var k in b) EX.pending[k] = b[k]; $('#ex-save').textContent = 'Sin guardar'; if (e.code === 'CLOSED') { EX.active = false; guard.stop(); studentHome(); } });
+}
+function finishAsk() {
+  var miss = EX.qs.length - Object.keys(EX.ans).length;
+  var msg = (miss ? 'Quedan ' + miss + ' reactivo(s) sin responder. ' : '') + '\n\nAl finalizar se emitirá su calificación definitiva, que NO podrá modificarse ni apelarse. ¿Desea continuar?';
+  if (!confirm(msg)) return;
+  clearTimeout(sv);
+  call('submitAttempt', { attemptId: EX.id, respuestas: EX.ans }).then(function (d) {
+    EX.active = false; guard.stop(); renderResult(d.result, d.debrief, d.notificaciones);
+  }).catch(function (e) { fail(e); if (e.code === 'CLOSED') { EX.active = false; guard.stop(); studentHome(); } });
+}
+$('#ex-finish').onclick = finishAsk;
+
+/* ---------- resultado + debriefing + confidencialidad ---------- */
+function renderResult(r, deb, notifs) {
+  show('result');
+  var ok = r.estatus === 'APROBADO';
+  var areas = (r.areas || []).map(function (a) {
+    var col = a.pct >= 70 ? 'var(--teal)' : 'var(--red)';
+    return '<div class="brow"><div class="bn">' + h(a.materia) + '</div><div class="bt"><i style="width:' + a.pct + '%;background:' + col + '"></i></div><div class="bv" style="color:' + col + '">' + a.pct + '</div></div>';
+  }).join('');
+  var html = '<div class="final"><div><small>Sustentante</small><div style="font-family:var(--disp);font-weight:700;font-size:20px">' + h(ST.user.apellidos + ', ' + ST.user.nombre) + '</div>' +
+    '<div style="color:#9dbbc9;font-size:13px">' + h(SP.nombre) + ' · Matrícula ' + h(ST.user.matricula) + '</div></div>' +
+    '<div style="text-align:right"><small>Calificación</small><div class="n" style="color:' + (ok ? '#5fd0c9' : '#ff9a8f') + '">' + r.calificacion + '<span style="font-size:18px;color:#9dbbc9">/100</span></div>' +
+    '<span class="pill ' + (ok ? 'ok' : 'no') + '">' + r.estatus + '</span> <span class="pill n">' + r.aciertos + '/' + r.total + ' aciertos</span></div></div>' +
+    '<div class="grid g-2" style="margin-top:20px"><div class="card pad"><h3 class="h3">Desempeño por materia</h3><div class="bars">' + areas + '</div>' +
+    '<div class="note" style="margin-top:14px">Mínimo aprobatorio: <b>' + r.minimo + '</b>. La calificación y este documento son definitivos; el sistema no permite modificarlos.</div></div>' +
+    '<div class="card pad"><h3 class="h3">Debriefing</h3><div id="deb"></div></div></div>' +
+    '<div class="card pad" id="conf-card" style="margin-top:20px"></div>';
+  $('#res-body').innerHTML = html;
+  var d = deb;
+  if (d) {
+    var fu = d.fuertes.length ? d.fuertes.map(function (x) { return '<div class="area good"><h5>' + h(x.materia) + '</h5><div class="pct">' + x.pct + '% · ' + x.ok + '/' + x.total + '</div></div>'; }).join('') : '<p class="muted">Aún no hay materias con 70% o más.</p>';
+    var op = d.oportunidades.length ? d.oportunidades.map(function (x) {
+      return '<div class="area bad"><h5>' + h(x.materia) + '</h5><div class="pct">' + x.pct + '% · ' + x.ok + '/' + x.total + '</div>' +
+        '<ul>' + x.temas.map(function (t) { return '<li>' + h(t) + '</li>'; }).join('') + '</ul>' +
+        '<div class="biblio"><b>Bibliografía:</b> ' + x.biblio.map(h).join(' · ') + '</div></div>';
+    }).join('') : '<p class="muted">Sin áreas críticas: todas las materias alcanzaron 70% o más.</p>';
+    $('#deb').innerHTML = '<p style="margin-top:0"><b>Materias fuertes</b></p><div class="arealist">' + fu + '</div><p style="margin:14px 0 6px"><b>Oportunidades de estudio</b></p><div class="arealist">' + op + '</div>' +
+      '<div class="row" style="margin-top:14px"><button class="btn ghost sm" id="dl-tem">Descargar temario PDF</button><button class="btn ghost sm" id="dl-res">Descargar resultado PDF</button></div>';
+    $('#dl-tem').onclick = function () { call('myPdf', { tipo: 'temario' }).then(function (x) { dlb64(x.base64, x.nombre); }).catch(fail); };
+    $('#dl-res').onclick = function () { call('myPdf', { tipo: 'resultado' }).then(function (x) { dlb64(x.base64, x.nombre); }).catch(fail); };
+  } else {
+    call('myDebrief').then(function (x) { $('#deb').innerHTML = '<p class="muted">Cargando…</p>'; renderResult(x.resultado, x.debrief); }).catch(fail);
+  }
+  if (notifs && notifs.length) {
+    $('#deb').insertAdjacentHTML('beforeend', '<div style="margin-top:14px">' + notifs.map(function (n) {
+      return '<div class="notif ' + (n.estado === 'enviado' ? 'ok' : (n.estado === 'error' ? 'err' : '')) + '">' + h(n.canal) + ' → ' + h(n.para) + ': <b>' + h(n.estado) + '</b>' + (n.detalle ? ' · ' + h(n.detalle) : '') + '</div>';
+    }).join('') + '</div>');
+  }
+  // confidencialidad
+  call('myStatus').then(function (s) {
+    ST = s;
+    if (s.confidencialidad) {
+      $('#conf-card').innerHTML = '<h3 class="h3">Acuerdo de confidencialidad</h3><p class="muted" style="margin:0">Firmado. Gracias.</p>';
+    } else {
+      $('#conf-card').innerHTML = '<div class="docbadge">Paso 3 de 3 · Obligatorio</div><h3 class="h3">Acuerdo de confidencialidad</h3>' +
+        '<div class="legal"><p>Me obligo a <b>no divulgar, publicar, fotografiar, grabar, reproducir ni compartir</b> por ningún medio los reactivos, opciones, casos clínicos, imágenes o cualquier contenido del examen que acabo de presentar, ni total ni parcialmente.</p>' +
+        '<p>Reconozco que el contenido es propiedad de sus autores y que su divulgación puede constituir una falta académica y profesional, con las consecuencias que determine la institución.</p>' +
+        '<p>Esta obligación es indefinida y subsiste después de concluida la evaluación.</p></div>' +
+        '<div class="sign"><label class="check"><input type="checkbox" id="cf-ok"><span>Acepto el acuerdo de confidencialidad.</span></label>' +
+        '<div class="field" style="margin:8px 0 0"><label class="f">Nombre completo (firma electrónica)</label><input id="cf-name" class="t" placeholder="' + h(ST.user.nombre + ' ' + ST.user.apellidos) + '"></div>' +
+        '<div class="msg" id="cf-msg"></div><button class="btn primary" id="cf-go">Firmar acuerdo</button></div>';
+      $('#cf-go').onclick = function () {
+        if (!$('#cf-ok').checked) { $('#cf-msg').textContent = 'Marque la casilla.'; return; }
+        call('signConfidentiality', { acepta: true, nombreCompleto: $('#cf-name').value }).then(function () {
+          $('#conf-card').innerHTML = '<h3 class="h3">Acuerdo de confidencialidad</h3><p class="muted" style="margin:0">Firmado y registrado. Gracias.</p>';
+          toast('Acuerdo firmado.');
+        }).catch(function (er) { $('#cf-msg').textContent = er.error; });
+      };
+    }
+  }).catch(function () {});
+}
+function dlb64(b64, name) {
+  var bin = atob(b64), arr = new Uint8Array(bin.length);
+  for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  download(new Blob([arr], { type: 'application/pdf' }), name);
+}
+function download(blob, name) { var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 2000); }
+
+/* ================= protección ================= */
+var guard = (function () {
+  var on = false, tm = null, bt = null, last = {};
+  function wmText() { var d = new Date(); return (ST ? ST.user.apellidos + ' ' + ST.user.nombre + ' · ' + ST.user.matricula : '') + ' · ' + p2(d.getDate()) + '/' + p2(d.getMonth() + 1) + ' ' + p2(d.getHours()) + ':' + p2(d.getMinutes()); }
+  function incident(tipo, det) {
+    if (!EX.active) return; var n = Date.now(); if (last[tipo] && n - last[tipo] < 4000) return; last[tipo] = n;
+    call('logIncident', { attemptId: EX.id, tipo: tipo, detalle: det || '' }, true).catch(function () {});
+  }
+  function veil(msg, tipo, det) { if (!EX.active) return; document.body.classList.add('veiled'); $('#shield-msg').textContent = msg; $('#shield').classList.add('on'); incident(tipo, det); }
+  function draw() {
+    var t = h(wmText()), W = innerWidth, H = innerHeight, out = '', row = 0;
+    for (var y = -60; y < H + 240; y += 118, row++) for (var x = -300 + (row % 2) * 200; x < W + 200; x += 420) out += '<span style="left:' + x + 'px;top:' + y + 'px">' + t + '</span>';
+    $('#wm').innerHTML = out; $('#wm-badge').textContent = wmText();
+  }
+  function move() { var b = $('#wm-badge'); b.style.left = (20 + Math.random() * Math.max(40, innerWidth - 380)) + 'px'; b.style.top = (90 + Math.random() * Math.max(40, innerHeight - 160)) + 'px'; }
+  function onKey(e) {
+    var k = (e.key || '').toLowerCase(), mod = e.ctrlKey || e.metaKey;
+    if (k === 'printscreen' || e.keyCode === 44) { e.preventDefault(); try { navigator.clipboard && navigator.clipboard.writeText('Captura no permitida · ' + wmText()); } catch (x) {} veil('Se detectó un intento de captura de pantalla. Quedó registrado.', 'captura_pantalla', 'Impr Pant'); return false; }
+    if (e.metaKey && e.shiftKey && /^[345s]$/.test(k)) { e.preventDefault(); veil('Atajo de captura bloqueado.', 'captura_pantalla', e.key); return false; }
+    if (k === 'f12' || (mod && e.shiftKey && /^[ijcs]$/.test(k))) { e.preventDefault(); incident('atajo_teclado', e.key); return false; }
+    if (mod && /^[cxvaspu]$/.test(k)) { e.preventDefault(); if (k === 'p') { incident('imprimir', 'Ctrl+P'); toast('La impresión no está permitida.', true); } return false; }
+  }
+  var ev = [['copy', function (e) { e.preventDefault(); try { e.clipboardData.setData('text/plain', 'Contenido protegido · ' + wmText()); } catch (x) {} incident('copiar', e.type); }],
+    ['cut', function (e) { e.preventDefault(); incident('copiar', 'cut'); }], ['paste', function (e) { e.preventDefault(); }],
+    ['contextmenu', function (e) { e.preventDefault(); incident('menu_contextual', 'Clic derecho'); }],
+    ['selectstart', function (e) { e.preventDefault(); }], ['dragstart', function (e) { e.preventDefault(); }],
+    ['keydown', onKey], ['keyup', onKey]];
+  function onVis() { if (document.hidden) veil('Salió de la ventana del examen. Quedó registrado.', 'salida_ventana', 'Pestaña oculta'); }
+  function onBlur() { veil('La ventana perdió el foco. Quedó registrado.', 'salida_ventana', 'Cambio de ventana'); }
+  function onPrint() { incident('imprimir', 'beforeprint'); }
+  return {
+    start: function () {
+      if (on) return; on = true; draw(); move();
+      tm = setInterval(draw, 30000); bt = setInterval(move, 6000);
+      ev.forEach(function (p) { document.addEventListener(p[0], p[1], true); });
+      document.addEventListener('visibilitychange', onVis); addEventListener('blur', onBlur); addEventListener('beforeprint', onPrint); addEventListener('resize', draw);
+    },
+    stop: function () {
+      if (!on) return; on = false; clearInterval(tm); clearInterval(bt);
+      ev.forEach(function (p) { document.removeEventListener(p[0], p[1], true); });
+      document.removeEventListener('visibilitychange', onVis); removeEventListener('blur', onBlur); removeEventListener('beforeprint', onPrint); removeEventListener('resize', draw);
+      $('#wm').innerHTML = ''; $('#shield').classList.remove('on'); document.body.classList.remove('veiled');
+    }
+  };
+})();
+$('#shield-back').onclick = function () { $('#shield').classList.remove('on'); document.body.classList.remove('veiled'); };
+
+/* ================= PANEL ================= */
+var R = { rows: [], especialidades: {}, config: {} };
+function loadResults() {
+  call('listResults').then(function (d) {
+    R = d;
+    var sel = $('#r-spec'), cur = sel.value;
+    sel.innerHTML = '<option value="">Todas las especialidades</option>' + Object.keys(d.especialidades).map(function (k) { return '<option value="' + k + '">' + h(d.especialidades[k].nombre) + '</option>'; }).join('');
+    sel.value = cur; renderResults();
+  }).catch(fail);
+}
+$('#r-refresh').onclick = loadResults;
+['#r-q', '#r-spec'].forEach(function (s) { $(s).oninput = renderResults; $(s).onchange = renderResults; });
+function renderResults() {
+  var fin = R.rows.filter(function (r) { return r.estado === 'emitido'; });
+  var ap = fin.filter(function (r) { return r.estatus === 'APROBADO'; }).length;
+  var prom = fin.length ? Math.round(fin.reduce(function (s, r) { return s + r.calificacion; }, 0) / fin.length) : 0;
+  var specs = {}; fin.forEach(function (r) { specs[r.especialidad] = 1; });
+  $('#r-stats').innerHTML = [[fin.length, 'Resultados emitidos'], [ap, 'Aprobados'], [Object.keys(specs).length, 'Especialidades evaluadas'], [fin.length ? prom : '—', 'Promedio']]
+    .map(function (s) { return '<div class="stat"><div class="n">' + s[0] + '</div><div class="l">' + s[1] + '</div></div>'; }).join('');
+  var q = $('#r-q').value.toLowerCase(), sp = $('#r-spec').value;
+  var rows = R.rows.filter(function (r) {
+    if (sp && r.especialidad !== sp) return false;
+    if (q && ((r.nombre + ' ' + r.apellidos + ' ' + r.matricula + ' ' + r.especialidadNombre).toLowerCase().indexOf(q) < 0)) return false;
+    return true;
+  }).sort(function (a, b) { return (b.emitido || 0) - (a.emitido || 0); });
+  $('#r-tb').innerHTML = rows.length ? rows.map(function (r) {
+    var ok = r.estatus === 'APROBADO', fin = r.estado === 'emitido';
+    return '<tr><td class="mono"><b>' + h(r.matricula) + '</b></td><td>' + h(r.apellidos + ', ' + r.nombre) + '</td><td>' + h(r.especialidadNombre) + '</td>' +
+      '<td class="mono">' + r.aciertos + '/' + r.total + '</td><td class="mono"><b>' + r.calificacion + '</b></td>' +
+      '<td>' + (fin ? '<span class="pill ' + (ok ? 'ok' : 'no') + '">' + r.estatus + '</span>' : '<span class="pill warn">EN CURSO</span>') + '</td>' +
+      '<td class="mono">' + fdt(r.emitido) + '</td><td class="act"><button class="btn ghost sm" data-det="' + r.id + '">Detalle</button></td></tr>';
+  }).join('') : '<tr><td colspan="8"><div class="empty"><b>Sin resultados</b>Aparecerán aquí en cuanto los sustentantes concluyan su examen.</div></td></tr>';
+}
+$('#r-tb').onclick = function (e) {
+  var b = e.target.closest('[data-det]'); if (!b) return;
+  call('attemptDetail', { id: b.dataset.det }).then(function (d) {
+    var a = d.attempt;
+    var html = '<div class="row" style="margin-bottom:12px"><span class="pill n mono">' + h(d.alumno.matricula) + '</span><span class="pill n">' + h(d.especialidad) + '</span><span class="pill n">' + a.calificacion + '/100</span><span class="pill ' + (a.estatus === 'APROBADO' ? 'ok' : 'no') + '">' + a.estatus + '</span></div>' +
+      '<div class="bars" style="margin-bottom:16px">' + a.areas.map(function (x) { var c = x.pct >= 70 ? 'var(--teal)' : 'var(--red)'; return '<div class="brow"><div class="bn">' + h(x.materia) + '</div><div class="bt"><i style="width:' + x.pct + '%;background:' + c + '"></i></div><div class="bv" style="color:' + c + '">' + x.pct + '</div></div>'; }).join('') + '</div>' +
+      '<h3 class="h3">Firmas y consentimientos</h3>' + (d.consentimientos.length ? d.consentimientos.map(function (c) { return '<div class="notif ok">' + h(c.tipo) + ' · ' + fdt(c.fecha) + ' · firma: <b>' + h(c.nombreCompleto) + '</b> · huella ' + h(c.huella.slice(0, 16)) + '…</div>'; }).join('') : '<p class="muted">Sin firmas registradas.</p>') +
+      '<h3 class="h3" style="margin-top:16px">Incidencias (' + d.incidencias.length + ')</h3>' + (d.incidencias.length ? d.incidencias.map(function (i) { return '<div class="notif">' + fdt(i.fecha) + ' · ' + h(i.tipo) + ' · ' + h(i.detalle) + '</div>'; }).join('') : '<p class="muted">Sin incidencias.</p>') +
+      '<h3 class="h3" style="margin-top:16px">Respuestas</h3>';
+    d.preguntas.forEach(function (q) {
+      var u = d.respuestas[q.n], k = d.clave[q.n];
+      html += '<div class="q"><div class="qh"><div class="num">' + q.n + '</div><div style="flex:1;min-width:0"><p class="stem">' + h(q.stem) + '</p><div class="opts">' +
+        q.options.map(function (o, i) { var l = 'abcd'[i]; return '<div class="opt' + (l === k ? ' correct' : (l === u ? ' wrong' : '')) + '"><span class="ol">' + l + '</span><span>' + h(o) + '</span></div>'; }).join('') +
+        '</div><div class="muted" style="font-size:12px;margin-top:6px">Alumno: <b>' + (u || 'sin responder') + '</b> · Clave: <b>' + k + '</b> ' + (u === k ? '✓' : '✗') + '</div></div></div></div>';
+    });
+    modal(d.alumno.apellidos + ', ' + d.alumno.nombre, html, true);
+    $('#m-body').insertAdjacentHTML('afterbegin', '<p class="note" style="margin-bottom:14px">Resultado emitido automáticamente; no puede editarse ni recalificarse.</p>');
+  }).catch(fail);
+};
+
+
+$('#r-exp').onclick = function () {
+  if (!confirm('Se generará un PDF con las cinco actas, cada una con su hoja de firmas de asistencia. ¿Continuar?')) return;
+  call('actasPdf', { incluirPendientes: true }).then(function (d) {
+    dlb64(d.base64, d.nombre);
+    var g = d.resumenGlobal;
+    modal('Expediente consolidado generado',
+      '<p class="muted" style="margin:0 0 12px">Archivo descargado con las ' + d.actas.length + ' actas.</p>' +
+      '<div class="cred">Folio <b>' + h(d.folio) + '</b><br>Huella: <b>' + h(d.sello.slice(0, 28)) + '…</b><br>' +
+      'Sustentantes: <b>' + g.total + '</b> · Aprobados: <b>' + g.aprobados + '</b> · No aprobados: <b>' + g.noAprobados + '</b> · Pendientes: <b>' + g.pendientes + '</b>' +
+      (g.promedio == null ? '' : ' · Promedio general: <b>' + g.promedio + '</b>') + '</div>' +
+      '<div class="note" style="margin-top:12px">' + d.actas.map(function (x) { return h(x.especialidad) + ' · ' + x.resumen.total + ' sustentantes · folio ' + h(x.folio); }).join('<br>') + '</div>' +
+      '<div class="row" style="margin-top:14px"><button class="btn primary" id="ex-ok">Cerrar</button></div>');
+    $('#ex-ok').onclick = closeModal;
+  }).catch(fail);
+};
+
+/* ---------- sustentantes ---------- */
+var S = [];
+function loadStudents() { call('listStudents').then(function (d) { S = d.rows; renderStudents(); }).catch(fail); }
+$('#s-q').oninput = renderStudents;
+function renderStudents() {
+  var q = $('#s-q').value.toLowerCase();
+  var rows = S.filter(function (u) { return !q || (u.nombre + ' ' + u.apellidos + ' ' + u.matricula + ' ' + u.email).toLowerCase().indexOf(q) >= 0; });
+  $('#s-count').textContent = rows.length + ' sustentantes';
+  $('#s-tb').innerHTML = rows.length ? rows.map(function (u) {
+    return '<tr><td class="mono"><b>' + h(u.matricula) + '</b></td><td>' + h(u.apellidos + ', ' + u.nombre) + '</td><td>' + h((STATUS.especialidades.filter(function (x) { return x.id === u.especialidad; })[0] || {}).nombre || u.especialidad) + '</td>' +
+      '<td>' + h(u.email) + '</td><td class="mono">' + (u.resultado == null ? '—' : u.resultado) + '</td><td>' + (u.estatus ? '<span class="pill ' + (u.estatus === 'APROBADO' ? 'ok' : 'no') + '">' + u.estatus + '</span>' : (u.enCurso ? '<span class="pill warn">EN CURSO</span>' : '<span class="pill n">Pendiente</span>')) + '</td>' +
+      '<td class="act"><button class="btn ghost sm" data-ed="' + u.id + '">Editar</button></td></tr>';
+  }).join('') : '<tr><td colspan="7"><div class="empty"><b>Sin sustentantes</b>Inscríbalos para enviarles su temario.</div></td></tr>';
+}
+function specOptions(v) { return STATUS.especialidades.map(function (s) { return '<option value="' + s.id + '"' + (v === s.id ? ' selected' : '') + '>' + h(s.nombre) + '</option>'; }).join(''); }
+function studentForm(u) {
+  u = u || {};
+  return '<form id="f-s"><div class="grid g-2">' +
+    '<div class="field"><label class="f">Apellidos</label><input class="t" id="s-a" value="' + h(u.apellidos) + '" required></div>' +
+    '<div class="field"><label class="f">Nombre(s)</label><input class="t" id="s-n" value="' + h(u.nombre) + '" required></div>' +
+    '<div class="field"><label class="f">Correo electrónico (recibirá su temario)</label><input class="t" id="s-e" type="email" value="' + h(u.email) + '" required></div>' +
+    '<div class="field"><label class="f">WhatsApp (opcional)</label><input class="t" id="s-w" value="' + h(u.whatsapp) + '" placeholder="5215512345678"></div>' +
+    '<div class="field"><label class="f">Matrícula / folio</label><input class="t mono" id="s-m" value="' + h(u.matricula) + '" placeholder="Si se deja vacío se usa el usuario"></div>' +
+    '<div class="field"><label class="f">Contraseña</label><input class="t mono" id="s-p" value="' + (u.id ? '' : rndPw()) + '" placeholder="' + (u.id ? 'Dejar vacío para conservar' : '') + '"></div></div>' +
+    '<div class="field"><label class="f">Subespecialidad</label><select class="t" id="s-sp">' + specOptions(u.especialidad) + '</select></div>' +
+    '<div class="msg" id="s-m2"></div><div class="row"><button class="btn primary">' + (u.id ? 'Guardar' : 'Inscribir y enviar temario') + '</button>' + (u.id ? '<button type="button" class="btn danger" id="s-del">Eliminar</button>' : '') + '</div></form>';
+}
+$('#s-new').onclick = function () {
+  modal('Inscribir sustentante', studentForm());
+  $('#f-s').onsubmit = function (e) {
+    e.preventDefault();
+    var p = { apellidos: $('#s-a').value, nombre: $('#s-n').value, email: $('#s-e').value, whatsapp: $('#s-w').value, matricula: $('#s-m').value, password: $('#s-p').value, especialidad: $('#s-sp').value, usuario: ($('#s-m').value || $('#s-e').value.split('@')[0]) };
+    call('createStudent', p).then(function (d) {
+      var html = '<p class="muted">Sustentante inscrito. Entregue estas credenciales:</p><div class="cred">Usuario <b>' + h(d.user.usuario) + '</b> · Contraseña <b>' + h(p.password) + '</b><br>Especialidad: <b>' + h(d.user.especialidad) + '</b> · Correo: ' + h(d.user.email) + '</div>';
+      html += (d.notificaciones || []).map(function (n) { return '<div class="notif ' + (n.estado === 'enviado' ? 'ok' : '') + '">Temario por ' + h(n.canal) + ' → ' + h(n.para) + ': <b>' + h(n.estado) + '</b></div>'; }).join('');
+      html += '<div class="row" style="margin-top:14px"><button class="btn primary" id="ok1">Listo</button></div>';
+      modal('Inscripción registrada', html); $('#ok1').onclick = closeModal; loadStudents();
+    }).catch(function (er) { $('#s-m2').textContent = er.error; });
+  };
+};
+$('#s-tb').onclick = function (e) {
+  var b = e.target.closest('[data-ed]'); if (!b) return;
+  var u = S.filter(function (x) { return x.id === b.dataset.ed; })[0];
+  modal('Editar ' + u.matricula, studentForm(u));
+  $('#f-s').onsubmit = function (ev) {
+    ev.preventDefault();
+    var p = { id: u.id, apellidos: $('#s-a').value, nombre: $('#s-n').value, email: $('#s-e').value, whatsapp: $('#s-w').value, matricula: $('#s-m').value, especialidad: $('#s-sp').value };
+    if ($('#s-p').value) p.password = $('#s-p').value;
+    call('updateUser', p).then(function () { closeModal(); loadStudents(); toast('Datos actualizados.'); }).catch(function (er) { $('#s-m2').textContent = er.error; });
+  };
+  $('#s-del').onclick = function () { if (confirm('¿Eliminar a ' + u.apellidos + ', ' + u.nombre + '?')) call('deleteUser', { id: u.id }).then(function () { closeModal(); loadStudents(); }).catch(function (er) { $('#s-m2').textContent = er.error; }); };
+};
+$('#s-bulk').onclick = function () {
+  modal('Alta masiva', '<p class="muted">Pegue desde Excel: <b>Correo · Apellidos · Nombre(s) · Matrícula · WhatsApp · Especialidad (neonatologia, gastroenterologia, critico, oncologia, cirugia)</b></p>' +
+    '<textarea class="t" id="bk" placeholder="ana@hospital.mx\tRUIZ PÉREZ\tANA\tA-001\t5215512345678\tneonatologia"></textarea>' +
+    '<div class="msg" id="bk-m"></div><button class="btn primary" id="bk-go">Inscribir</button>');
+  $('#bk-go').onclick = function () {
+    var lines = $('#bk').value.split(/\r?\n/).map(function (l) { return l.trim() ? l.split(/\t|;|\|/).map(function (c) { return c.trim(); }) : null; }).filter(Boolean);
+    if (lines.length && /correo|email/i.test(lines[0][0])) lines.shift();
+    var rows = lines.map(function (c) { return { email: c[0], apellidos: c[1], nombre: c[2], matricula: c[3], whatsapp: c[4] || '', especialidad: (c[5] || '').toLowerCase(), usuario: c[3] || String(c[0] || '').split('@')[0], password: rndPw() }; });
+    call('importStudents', { rows: rows }).then(function (d) {
+      var html = '<p class="muted">Creados: <b>' + d.creados + '</b>' + (d.errores.length ? ' · errores: ' + d.errores.length : '') + '</p>';
+      if (d.lista.length) html += '<div class="cred">' + d.lista.map(function (x, i) { return h(x.apellidos + ', ' + x.nombre) + ' — ' + h(x.email) + ' · usuario <b>' + h(x.usuario) + '</b> · contraseña <b>' + h(rows.filter(function (r) { return r.email === x.email; })[0].password) + '</b>'; }).join('<br>') + '</div>';
+      if (d.errores.length) html += '<div class="notif err">' + d.errores.map(function (e) { return 'Fila ' + e.fila + ': ' + h(e.error); }).join('<br>') + '</div>';
+      html += '<div class="row" style="margin-top:14px"><button class="btn primary" id="ok2">Listo</button></div>';
+      modal('Alta masiva', html); $('#ok2').onclick = closeModal; loadStudents();
+    }).catch(function (er) { $('#bk-m').textContent = er.error; });
+  };
+};
+
+/* ---------- configuración ---------- */
+function loadConfig() {
+  call('getSettings').then(function (s) {
+    $('#st-min').value = s.minAprob; $('#st-int').value = s.intentos;
+    $('#ch-info').innerHTML = 'Correo: <b>' + h(s.canales.correo) + '</b><br>WhatsApp: <b>' + h(s.canales.whatsapp) + '</b>';
+    $('#cfg-specs').innerHTML = s.catalogo.map(function (c) {
+      var v = s.especialidades[c.id] || {};
+      return '<div class="card pad" style="margin-bottom:14px;box-shadow:none"><h4 style="margin:0 0 10px;font-family:var(--disp)">' + h(c.nombre) + ' <span class="pill n">' + c.items + ' reactivos</span></h4>' +
+        '<div class="grid g-2"><div class="field"><label class="f">Jefe de servicio</label><input class="t" data-f="jefe" data-k="' + c.id + '" value="' + h(v.jefe) + '"></div>' +
+        '<div class="field"><label class="f">Correo del jefe</label><input class="t" type="email" data-f="jefeEmail" data-k="' + c.id + '" value="' + h(v.jefeEmail) + '"></div>' +
+        '<div class="field"><label class="f">WhatsApp del jefe</label><input class="t" data-f="jefeTel" data-k="' + c.id + '" value="' + h(v.jefeTel) + '" placeholder="5215512345678"></div>' +
+        '<div class="field"><label class="f">Titular de la especialidad</label><input class="t" data-f="titular" data-k="' + c.id + '" value="' + h(v.titular) + '"></div>' +
+        '<div class="field"><label class="f">Correo del titular</label><input class="t" type="email" data-f="titularEmail" data-k="' + c.id + '" value="' + h(v.titularEmail) + '"></div>' +
+        '<div class="field"><label class="f">WhatsApp del titular</label><input class="t" data-f="titularTel" data-k="' + c.id + '" value="' + h(v.titularTel) + '"></div></div></div>';
+    }).join('');
+  }).catch(fail);
+}
+
+function loadDiag() {
+  if (!ME || ME.rol !== 'admin') return;
+  call('diagnostico', {}, true).then(function (d) {
+    $('#diag-card').style.display = '';
+    if (!d.total) {
+      $('#diag-info').textContent = 'Sin discrepancias: las ' + 'calificaciones registradas coinciden con el recálculo automático (motor ' + d.motorActual + ').';
+      $('#diag-list').innerHTML = '';
+      return;
+    }
+    $('#diag-info').innerHTML = 'Se encontraron <b>' + d.total + '</b> calificaciones que no coinciden con el recálculo a partir de las respuestas guardadas. ' +
+      'Ocurre en exámenes calificados con la versión anterior del motor (1.0). Revise y, si procede, aplique la corrección: queda registrada en la bitácora.';
+    $('#diag-list').innerHTML = '<div class="tblwrap"><table style="min-width:0"><thead><tr><th>Matrícula</th><th>Alumno</th><th>Especialidad</th><th>Respuestas</th><th>Actual</th><th>Recalculada</th></tr></thead><tbody>' +
+      d.rows.map(function (r) {
+        return '<tr><td class="mono">' + h(r.matricula) + '</td><td>' + h(r.alumno) + '</td><td>' + h(r.especialidad) + '</td><td class="mono">' + r.contestadas + '/' + r.total + '</td>' +
+          '<td class="mono">' + r.actual.calificacion + ' <span class="muted">(' + r.actual.aciertos + ')</span></td>' +
+          '<td class="mono"><b>' + r.nuevo.calificacion + '</b> <span class="muted">(' + r.nuevo.aciertos + ')</span></td></tr>';
+      }).join('') + '</tbody></table></div>' +
+      '<div class="row" style="margin-top:14px"><button class="btn primary" id="diag-fix">Recalificar ' + d.total + ' examen(es)</button></div>';
+    $('#diag-fix').onclick = function () {
+      var motivo = prompt('Motivo de la corrección (queda en la bitácora):', 'Corrección de error del sistema: la clave se comparó con distinción de mayúsculas y el resultado se calculó en 0.');
+      if (motivo == null) return;
+      if (!confirm('Se recalcularán ' + d.total + ' calificaciones a partir de las respuestas guardadas. La acción queda auditada y no se puede deshacer. ¿Continuar?')) return;
+      call('recalificar', { confirma: true, motivo: motivo, ids: d.rows.map(function (r) { return r.id; }) }).then(function (x) {
+        var docs = (x.constancias || []).map(function (c) { return h(c.folio) + ' · ' + h(c.especialidad) + ' (' + c.examenes + ')'; });
+        toast('Recalificados: ' + x.recalificados + (docs.length ? ' · constancias: ' + docs.join(', ') : ''));
+        loadDiag(); loadResults(); loadFolios(); loadConstancias();
+      }).catch(fail);
+    };
+  }).catch(function () {});
+}
+
+
+function loadFolios() {
+  call('folios', {}, true).then(function (d) {
+    $('#folio-tb').innerHTML = d.rows.map(function (r) {
+      return '<tr><td>' + h(r.etiqueta) + '</td><td class="mono">' + h(r.prefijo) + '</td><td class="mono">' + r.usados + '</td><td class="mono"><b>' + h(r.siguiente) + '</b></td></tr>';
+    }).join('');
+    loadActasReg();
+    var sel = $('#rf-esp');
+    if (STATUS && !sel.options.length) sel.innerHTML = '<option value="">Todas las subespecialidades</option>' + STATUS.especialidades.map(function (s) { return '<option value="' + s.id + '">' + h(s.nombre) + '</option>'; }).join('');
+  }).catch(function () {});
+}
+function loadActasReg() {
+  call('actasEmitidas', {}, true).then(function (d) {
+    var tb = $('#actas-tb'); if (!tb) return;
+    tb.innerHTML = d.rows.length ? d.rows.map(function (r) {
+      return '<tr><td class="mono"><b>' + h(r.folio) + '</b></td><td>' + h(r.especialidad) + '</td><td class="mono">' + h(r.fecha) + '</td>' +
+        '<td class="mono" style="font-size:11px">' + h(r.sello) + '</td>' +
+        '<td>' + (r.reimpresiones ? '<span class="pill n">Reimpresión</span>' : '<span class="pill ok">Original</span>') + '</td>' +
+        '<td class="mono">' + r.reimpresiones + '</td><td class="mono">' + h(r.ultimaReimpresion || '—') + '</td></tr>';
+    }).join('') : '<tr><td colspan="7"><div class="empty"><b>Sin actas emitidas</b>Se registran al emitir el acta de cada subespecialidad.</div></td></tr>';
+  }).catch(function () {});
+}
+
+function loadConstancias() {
+  call('listConstancias', {}, true).then(function (d) {
+    $('#k-tb').innerHTML = d.rows.length ? d.rows.map(function (k) {
+      return '<tr><td class="mono"><b>' + h(k.folio) + '</b></td><td class="mono">' + fdt(k.fecha) + '</td><td>' + h(k.especialidadNombre) + '</td><td class="mono">' + k.examenes + '</td><td style="white-space:normal;max-width:300px">' + h(k.motivo) + '</td><td>' + h(k.usuario) + '</td>' +
+        '<td class="act"><button class="btn ghost sm" data-k="' + k.id + '">Descargar</button></td></tr>';
+    }).join('') : '<tr><td colspan="7"><div class="empty"><b>Sin constancias</b>Se emiten al recalificar calificaciones por un defecto del sistema.</div></td></tr>';
+    $('#k-tb').onclick = function (e) {
+      var b = e.target.closest('[data-k]'); if (!b) return;
+      call('constanciaPdf', { id: b.dataset.k }).then(function (x) { dlb64(x.base64, x.nombre); }).catch(fail);
+    };
+  }).catch(function () {});
+}
+$('#rf-go').onclick = function () {
+  var t = $('#rf-tipo').value, e = $('#rf-esp').value;
+  if (!confirm('Se reiniciará la numeración de los folios seleccionados y volverá a 0001. Los documentos ya emitidos conservan su folio, por lo que podrían repetirse números. ¿Continuar?')) return;
+  call('resetFolios', { confirma: true, tipo: t, especialidad: e }).then(function (x) { toast('Numeración reiniciada (' + x.reiniciados + ' contadores). Los folios ya emitidos se conservan en el registro de actas.'); loadFolios(); }).catch(fail);
+};
+
+$('#f-gen').onsubmit = function (e) {
+  e.preventDefault();
+  call('saveSettings', { minAprob: $('#st-min').value, intentos: $('#st-int').value }).then(function () { $('#st-msg').className = 'msg ok'; $('#st-msg').textContent = 'Reglas guardadas.'; }).catch(function (er) { $('#st-msg').className = 'msg'; $('#st-msg').textContent = er.error; });
+};
+$('#cfg-save').onclick = function () {
+  var out = {};
+  $$('#cfg-specs [data-k]').forEach(function (i) { var k = i.dataset.k; out[k] = out[k] || {}; out[k][i.dataset.f] = i.value; });
+  call('saveSettings', { especialidades: out }).then(function () { $('#cfg-msg').className = 'msg ok'; $('#cfg-msg').textContent = 'Destinatarios guardados.'; }).catch(function (er) { $('#cfg-msg').textContent = er.error; });
+};
+
+/* ---------- bitácora ---------- */
+function loadNotifs() {
+  call('listNotifications').then(function (d) {
+    $('#n-tb').innerHTML = d.rows.length ? d.rows.map(function (n) {
+      return '<tr><td class="mono">' + fdt(n.creado) + '</td><td>' + h(n.canal) + '</td><td>' + h(n.nombre ? n.nombre + ' · ' : '') + h(n.para) + '</td><td>' + h(n.tipo) + '</td>' +
+        '<td><span class="pill ' + (n.estado === 'enviado' ? 'ok' : (n.estado === 'error' ? 'no' : 'n')) + '">' + h(n.estado) + '</span></td><td style="white-space:normal;max-width:340px">' + h(n.detalle) + '</td>' +
+        '<td class="act">' + (ME.rol === 'admin' && n.estado !== 'enviado' ? '<button class="btn ghost sm" data-rs="' + n.id + '">Reenviar</button>' : '') + '</td></tr>';
+    }).join('') : '<tr><td colspan="7"><div class="empty"><b>Sin envíos</b>Se registrarán al inscribir alumnos y al emitir resultados.</div></td></tr>';
+  }).catch(fail);
+  call('listConsents').then(function (d) {
+    $('#c-tb').innerHTML = d.rows.length ? d.rows.map(function (c) {
+      return '<tr><td class="mono">' + fdt(c.fecha) + '</td><td>' + h(c.tipo) + '</td><td>' + h(c.nombre) + '</td><td class="mono">' + h(c.matricula) + '</td><td>' + h(c.especialidad) + '</td><td>' + h(c.firma) + '</td><td class="mono" style="font-size:11px">' + h(c.huella.slice(0, 18)) + '…</td></tr>';
+    }).join('') : '<tr><td colspan="7"><div class="empty"><b>Sin firmas</b></div></td></tr>';
+  }).catch(fail);
+}
+$('#n-refresh').onclick = loadNotifs;
+$('#n-tb').onclick = function (e) {
+  var b = e.target.closest('[data-rs]'); if (!b) return;
+  call('resend', { id: b.dataset.rs }).then(function (r) { toast('Reenvío: ' + r.estado + (r.detalle ? ' · ' + r.detalle : '')); loadNotifs(); }).catch(fail);
+};
+
+
+$('#r-acta').onclick = function () {
+  var list = (R.especialidades && Object.keys(R.especialidades).length) ? R.especialidades
+    : (STATUS ? STATUS.especialidades.reduce(function (o, s) { o[s.id] = s; return o; }, {}) : {});
+  var ids = Object.keys(list);
+  if (!ids.length) { toast('No hay especialidades disponibles.', true); return; }
+  modal('Acta por subespecialidad',
+    '<p class="muted" style="margin:0 0 14px">Genera el acta para expediente: relación de sustentantes con calificación, firma electrónica registrada, resumen y espacios de firma de las autoridades.</p>' +
+    '<div class="field"><label class="f">Subespecialidad</label><select class="t" id="ac-sp">' +
+    ids.map(function (k) { return '<option value="' + k + '">' + h(list[k].nombre) + '</option>'; }).join('') + '</select></div>' +
+    '<label class="check sm" style="margin-bottom:14px"><input type="checkbox" id="ac-pend" checked> <span>Incluir sustentantes con examen pendiente</span></label>' +
+    '<div class="msg" id="ac-m"></div><button class="btn primary" id="ac-go">Generar acta PDF</button>');
+  $('#ac-go').onclick = function () {
+    $('#ac-m').textContent = '';
+    call('actaPdf', { especialidad: $('#ac-sp').value, incluirPendientes: $('#ac-pend').checked }).then(function (d) {
+      dlb64(d.base64, d.nombre);
+      var r = d.resumen;
+      $('#m-body').innerHTML = '<p class="muted" style="margin:0 0 12px">Acta generada y descargada.</p><div class="cred">Folio <b>' + h(d.folio) + '</b><br>Sello digital SHA-256: <b>' + h(d.sello.slice(0, 28)) + '…</b><br>' +
+        'Sustentantes: <b>' + r.total + '</b> · Aprobados: <b>' + r.aprobados + '</b> · No aprobados: <b>' + r.noAprobados + '</b> · Pendientes: <b>' + r.pendientes + '</b>' +
+        (r.promedio == null ? '' : ' · Promedio: <b>' + r.promedio + '</b>') + '</div>' +
+        '<div class="row" style="margin-top:14px"><button class="btn primary" id="ac-ok">Cerrar</button></div>';
+      $('#ac-ok').onclick = closeModal;
+    }).catch(function (e) { $('#ac-m').textContent = e.error; });
+  };
+};
+
+/* ---------- Excel ---------- */
+$('#r-xlsx').onclick = function () {
+  var rows = [['Matrícula', 'Apellidos', 'Nombre(s)', 'Correo', 'Especialidad', 'Reactivos', 'Aciertos', 'Calificación', 'Estatus', 'Mínimo', 'Emitido']];
+  R.rows.filter(function (r) { return r.estado === 'emitido'; }).forEach(function (r) {
+    rows.push([r.matricula, r.apellidos, r.nombre, r.email, r.especialidadNombre, r.total, r.aciertos, r.calificacion, r.estatus, r.minimo, fdt(r.emitido)]);
+  });
+  download(xlsx([{ name: 'Resultados', rows: rows, widths: [14, 24, 24, 30, 34, 10, 10, 13, 14, 9, 17] }]), 'Resultados_subespecialidades_' + fname() + '.xlsx');
+  toast('Excel descargado.');
+};
+var CRC = (function () { var t = new Uint32Array(256); for (var n = 0; n < 256; n++) { var c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u) { var c = 0xFFFFFFFF; for (var i = 0; i < u.length; i++) c = CRC[(c ^ u[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function enc(s) { return new TextEncoder().encode(s); }
+function xlsx(sheets) {
+  var parts = [], cen = [], off = 0;
+  var u16 = function (n) { return [n & 255, n >> 8 & 255]; }, u32 = function (n) { return [n & 255, n >> 8 & 255, n >> 16 & 255, n >>> 24 & 255]; };
+  function add(name, data) {
+    var nm = enc(name), c = crc32(data);
+    var lh = [].concat(u32(0x04034b50), u16(20), u16(0x0800), u16(0), u16(0), u16(0), u32(c), u32(data.length), u32(data.length), u16(nm.length), u16(0));
+    parts.push(new Uint8Array(lh), nm, data); cen.push({ nm: nm, c: c, l: data.length, o: off }); off += lh.length + nm.length + data.length;
+  }
+  function xe(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function col(i) { var s = ''; i++; while (i > 0) { var m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; }
+  add('[Content_Types].xml', enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' + sheets.map(function (s, i) { return '<Override PartName="/xl/worksheets/sheet' + (i + 1) + '.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'; }).join('') + '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'));
+  add('_rels/.rels', enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'));
+  add('xl/workbook.xml', enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>' + sheets.map(function (s, i) { return '<sheet name="' + xe(s.name) + '" sheetId="' + (i + 1) + '" r:id="rId' + (i + 1) + '"/>'; }).join('') + '</sheets></workbook>'));
+  add('xl/_rels/workbook.xml.rels', enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + sheets.map(function (s, i) { return '<Relationship Id="rId' + (i + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet' + (i + 1) + '.xml"/>'; }).join('') + '<Relationship Id="rId' + (sheets.length + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'));
+  add('xl/styles.xml', enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF0C2130"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border/></borders><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" applyFont="1" applyFill="1"/></cellXfs></styleSheet>'));
+  sheets.forEach(function (s, i) {
+    var body = '';
+    s.rows.forEach(function (r, ri) {
+      var rn = ri + 1;
+      body += '<row r="' + rn + '">' + r.map(function (v, ci) {
+        var ref = col(ci) + rn, st = rn === 1 ? ' s="1"' : '';
+        if (v == null || v === '') return '<c r="' + ref + '"' + st + '/>';
+        if (typeof v === 'number') return '<c r="' + ref + '"' + st + '><v>' + v + '</v></c>';
+        return '<c r="' + ref + '" t="inlineStr"' + st + '><is><t xml:space="preserve">' + xe(v) + '</t></is></c>';
+      }).join('') + '</row>';
+    });
+    var cols = '<cols>' + (s.widths || []).map(function (w, j) { return '<col min="' + (j + 1) + '" max="' + (j + 1) + '" width="' + w + '" customWidth="1"/>'; }).join('') + '</cols>';
+    add('xl/worksheets/sheet' + (i + 1) + '.xml', enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' + cols + '<sheetData>' + body + '</sheetData></worksheet>'));
+  });
+  var cd = [], cs = 0;
+  cen.forEach(function (e) { var hd = [].concat(u32(0x02014b50), u16(20), u16(20), u16(0x0800), u16(0), u16(0), u16(0), u32(e.c), u32(e.l), u32(e.l), u16(e.nm.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(e.o)); cd.push(new Uint8Array(hd), e.nm); cs += hd.length + e.nm.length; });
+  var end = [].concat(u32(0x06054b50), u16(0), u16(0), u16(cen.length), u16(cen.length), u32(cs), u32(off), u16(0));
+  return new Blob(parts.concat(cd, [new Uint8Array(end)]), { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+}
+
+/* ================= inicio ================= */
+if (TOKEN) call('me').then(function (d) { enter(d.user); }).catch(function () { showLogin(); initGoogle(); }); else { showLogin(); initGoogle(); }
+})();
+</script>
+</body>
+</html>
