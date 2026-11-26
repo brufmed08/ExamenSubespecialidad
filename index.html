@@ -364,7 +364,7 @@ td.act{text-align:right}
 <section class="view" id="v-result"><div class="wrap pt" id="res-body"></div></section>
 
 <section class="view" id="v-results"><div class="wrap pt">
-  <div class="head-row"><div><div class="kick">Calificaciones</div><h2 class="title">Resultados</h2><p class="muted" style="margin:0">Resultados emitidos automáticamente. No son editables.</p></div>
+  <div class="head-row"><div><div class="kick">Calificaciones</div><h2 class="title">Resultados</h2><p class="muted" style="margin:0" id="r-sub">Resultados emitidos automáticamente. Solo el jefe de servicio, enseñanza y la coordinación pueden cambiar el dictamen de una respuesta, siempre con justificación.</p></div>
   <div class="row"><button class="btn dark" id="r-acta">Acta por subespecialidad</button><button class="btn dark" id="r-exp">Expediente (5 actas)</button><button class="btn primary" id="r-xlsx">Descargar Excel</button><button class="btn ghost" id="r-refresh">Actualizar</button></div></div>
   <div class="grid g-4 stats" id="r-stats"></div>
   <div class="row filters"><input id="r-q" class="t" placeholder="Buscar nombre, matrícula o especialidad…"><select id="r-spec" class="t"><option value="">Todas las especialidades</option></select></div>
@@ -376,6 +376,20 @@ td.act{text-align:right}
   <div class="row"><button class="btn primary" id="s-new">Inscribir sustentante</button><button class="btn dark" id="s-bulk">Alta masiva</button></div></div>
   <div class="row filters"><input id="s-q" class="t" placeholder="Buscar…"><span class="pill n" id="s-count"></span></div>
   <div class="tblwrap"><table><thead><tr><th>Matrícula</th><th>Alumno</th><th>Especialidad</th><th>Correo</th><th>Calificación</th><th>Estatus</th><th></th></tr></thead><tbody id="s-tb"></tbody></table></div>
+</div></section>
+
+<section class="view" id="v-review"><div class="wrap pt">
+  <div class="head-row"><div><div class="kick">Revisión académica</div><h2 class="title">Reactivos del examen</h2><p class="muted" style="margin:0">Revise cada reactivo con su clave. Puede marcarlo para revisión y, si lo considera, dejar su opinión.</p></div>
+  <div class="row"><button class="btn ghost" id="rv-refresh">Actualizar</button></div></div>
+  <div class="row filters"><input id="rv-q" class="t" placeholder="Buscar por número, materia o texto…"><select id="rv-f" class="t"><option value="">Todos los reactivos</option><option value="marcados">Solo marcados</option><option value="abiertas">Con revisión abierta</option></select><span class="pill n" id="rv-count"></span></div>
+  <div id="rv-list"></div>
+</div></section>
+
+<section class="view" id="v-staff"><div class="wrap pt">
+  <div class="head-row"><div><div class="kick">Administración</div><h2 class="title">Usuarios del personal</h2><p class="muted" style="margin:0">Alta de titulares, jefes de servicio y enseñanza. Solo el coordinador puede eliminar usuarios.</p></div>
+  <div class="row"><button class="btn primary" id="u-new">Dar de alta usuario</button></div></div>
+  <div class="grid g-2" style="margin:0 0 18px" id="u-roles"></div>
+  <div class="tblwrap"><table><thead><tr><th>Usuario</th><th>Nombre</th><th>Cargo</th><th>Correo</th><th>Estado</th><th>Último acceso</th><th></th></tr></thead><tbody id="u-tb"></tbody></table></div>
 </div></section>
 
 <section class="view" id="v-config"><div class="wrap pt">
@@ -394,10 +408,14 @@ td.act{text-align:right}
     <div class="card pad"><h3 class="h3">Canales de notificación</h3><div id="ch-info" class="muted" style="font-size:13px"></div>
       <div class="note" style="margin-top:12px">Correo: SMTP o MailApp de Google. WhatsApp: CallMeBot o WhatsApp Cloud API (Meta). Si no hay credenciales, el sistema funciona en modo simulación y registra el envío en la bitácora.</div></div>
   </div>
+  <div class="card pad" style="margin-top:20px"><h3 class="h3">Titular de Pediatría y Jefe de Enseñanza</h3>
+    <p class="muted" style="font-size:13px;margin:0 0 12px">Únicos para todo el hospital: firman todas las actas y reciben el resultado de cada sustentante de todas las subespecialidades.</p>
+    <div class="grid g-2" id="cfg-inst"></div>
+  </div>
   <div class="card pad" style="margin-top:20px"><h3 class="h3">Jefes de servicio y titulares por especialidad</h3>
     <div id="cfg-specs"></div>
     <div class="row" style="margin-top:14px"><button class="btn primary" id="cfg-save">Guardar destinatarios</button><span class="msg" id="cfg-msg" style="margin:0"></span></div>
-    <div class="note" style="margin-top:14px">Estos destinatarios reciben por correo y WhatsApp el resultado de cada sustentante de su especialidad.</div>
+    <div class="note" style="margin-top:14px">Estos destinatarios reciben por correo y WhatsApp el resultado de cada sustentante de su especialidad. El botón «Guardar destinatarios» guarda también al Titular de Pediatría y al Jefe de Enseñanza.</div>
   </div>
   <div class="card pad" id="folio-card" style="margin-top:20px">
     <h3 class="h3">Folios de los documentos</h3>
@@ -406,7 +424,7 @@ td.act{text-align:right}
     <div class="row" style="margin-top:14px">
       <select id="rf-tipo" class="t" style="max-width:230px"><option value="todo">Todos los documentos</option><option value="acta">Actas</option><option value="expediente">Expedientes</option><option value="constancia">Constancias</option></select>
       <select id="rf-esp" class="t" style="max-width:260px"><option value="">Todas las subespecialidades</option></select>
-      <button class="btn danger sm" id="rf-go">Reiniciar numeración</button>
+      <button class="btn danger sm" id="rf-go">Reiniciar numeración</button><span class="muted" id="rf-only" style="font-size:12px">Solo el coordinador puede reiniciar la numeración.</span>
     </div>
   </div>
   <div class="card pad" id="actas-card" style="margin-top:20px">
@@ -428,6 +446,8 @@ td.act{text-align:right}
   <div class="tblwrap"><table><thead><tr><th>Fecha</th><th>Canal</th><th>Destinatario</th><th>Tipo</th><th>Estado</th><th>Detalle</th><th></th></tr></thead><tbody id="n-tb"></tbody></table></div>
   <h3 class="h3" style="margin-top:26px">Constancias de corrección</h3>
   <div class="tblwrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Subespecialidad</th><th>Exámenes</th><th>Motivo</th><th>Autorizó</th><th></th></tr></thead><tbody id="k-tb"></tbody></table></div>
+  <h3 class="h3" style="margin-top:26px">Cambios y movimientos</h3>
+  <div class="tblwrap"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Usuario</th><th>Detalle</th></tr></thead><tbody id="au-tb"></tbody></table></div>
   <h3 class="h3" style="margin-top:26px">Firmas</h3>
   <div class="tblwrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Alumno</th><th>Matrícula</th><th>Especialidad</th><th>Firma</th><th>Huella</th></tr></thead><tbody id="c-tb"></tbody></table></div>
 </div></section>
@@ -474,8 +494,19 @@ function call(action, params, quiet) {
 function fail(e) { toast((e && e.error) || 'Ocurrió un error.', true); }
 
 function show(id) { $$('.view').forEach(function (v) { v.classList.remove('on'); }); $('#v-' + id).classList.add('on'); $$('#tabs button').forEach(function (b) { b.classList.toggle('on', b.dataset.v === id); }); window.scrollTo(0, 0); }
-var TABS = { admin: [['results', 'Resultados'], ['students', 'Sustentantes'], ['config', 'Especialidades'], ['notifs', 'Bitácora']], calificador: [['results', 'Resultados'], ['students', 'Sustentantes'], ['notifs', 'Bitácora']] };
-var ROLES = { admin: 'Administrador', calificador: 'Calificador', alumno: 'Sustentante' };
+var TAB_FULL = [['results', 'Resultados'], ['students', 'Sustentantes'], ['review', 'Reactivos'], ['staff', 'Usuarios'], ['config', 'Especialidades'], ['notifs', 'Bitácora']];
+var TAB_ACAD = [['results', 'Resultados'], ['students', 'Sustentantes'], ['review', 'Reactivos']];
+var TABS = { admin: TAB_FULL, ensenanza: TAB_FULL, calificador: TAB_FULL, jefe: TAB_ACAD, titular: TAB_ACAD };
+var ROLES = { admin: 'Coordinador', ensenanza: 'Jefe de enseñanza', calificador: 'Jefe de enseñanza', jefe: 'Jefe de servicio', titular: 'Titular', alumno: 'Sustentante' };
+function isFull() { return ME && (ME.rol === 'admin' || ME.rol === 'ensenanza' || ME.rol === 'calificador'); }
+function isAdmin() { return ME && ME.rol === 'admin'; }
+function canAdjust() { return ME && (isFull() || ME.rol === 'jefe'); }
+function applyRole() {
+  var f = isFull();
+  ['#r-acta', '#r-exp'].forEach(function (s) { var e = $(s); if (e) e.style.display = f ? '' : 'none'; });
+  var rf = $('#rf-go'); if (rf) rf.style.display = isAdmin() ? '' : 'none';
+  var ro = $('#rf-only'); if (ro) ro.style.display = isAdmin() ? 'none' : '';
+}
 
 function initGoogle() {
   call('loginConfig', {}, true).then(function (cfg) {
@@ -554,13 +585,14 @@ function showLogin() {
 function enter(u) {
   ME = u; $('#topbar').style.display = '';
   $('#who-n').textContent = (u.nombre + ' ' + (u.apellidos || '')).trim();
-  $('#who-r').textContent = ROLES[u.rol];
+  $('#who-r').textContent = u.cargo || ROLES[u.rol] || u.rol;
+  applyRole();
   $('#tabs').innerHTML = (TABS[u.rol] || []).map(function (t) { return '<button data-v="' + t[0] + '">' + t[1] + '</button>'; }).join('');
   if (!STATUS) call('status', {}, true).then(function (s) { STATUS = s; }).catch(function () {});
   if (u.rol === 'alumno') studentHome(); else openTab(u.rol === 'admin' ? 'results' : 'results');
 }
 $('#tabs').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) openTab(b.dataset.v); });
-function openTab(v) { show(v); if (v === 'results') loadResults(); if (v === 'students') loadStudents(); if (v === 'config') loadConfig(); if (v === 'notifs') loadNotifs(); }
+function openTab(v) { show(v); if (v === 'results') loadResults(); if (v === 'students') loadStudents(); if (v === 'review') loadReview(); if (v === 'staff') loadStaff(); if (v === 'config') { loadConfig(); loadFolios(); loadDiag(); } if (v === 'notifs') { loadNotifs(); loadConstancias(); loadAudit(); } }
 
 $$('[data-eye]').forEach(function (b) { b.onclick = function () { var i = $('#' + b.dataset.eye); i.type = i.type === 'password' ? 'text' : 'password'; b.textContent = i.type === 'password' ? 'Ver' : 'Ocultar'; }; });
 $('#f-login').addEventListener('submit', function (e) {
@@ -840,25 +872,86 @@ function renderResults() {
       '<td class="mono">' + fdt(r.emitido) + '</td><td class="act"><button class="btn ghost sm" data-det="' + r.id + '">Detalle</button></td></tr>';
   }).join('') : '<tr><td colspan="8"><div class="empty"><b>Sin resultados</b>Aparecerán aquí en cuanto los sustentantes concluyan su examen.</div></td></tr>';
 }
+var DET = null;
 $('#r-tb').onclick = function (e) {
   var b = e.target.closest('[data-det]'); if (!b) return;
-  call('attemptDetail', { id: b.dataset.det }).then(function (d) {
+  openDetail(b.dataset.det);
+};
+function openDetail(id, keepScroll) {
+  call('attemptDetail', { id: id }).then(function (d) {
+    DET = d;
     var a = d.attempt;
-    var html = '<div class="row" style="margin-bottom:12px"><span class="pill n mono">' + h(d.alumno.matricula) + '</span><span class="pill n">' + h(d.especialidad) + '</span><span class="pill n">' + a.calificacion + '/100</span><span class="pill ' + (a.estatus === 'APROBADO' ? 'ok' : 'no') + '">' + a.estatus + '</span></div>' +
+    var html = '<div class="row" style="margin-bottom:12px"><span class="pill n mono">' + h(d.alumno.matricula) + '</span><span class="pill n">' + h(d.especialidad) + '</span><span class="pill n">' + a.calificacion + '/100 · ' + a.aciertos + '/' + a.total + '</span><span class="pill ' + (a.estatus === 'APROBADO' ? 'ok' : 'no') + '">' + a.estatus + '</span>' + (a.ajustes ? '<span class="pill warn">' + a.ajustes + ' dictamen(es) ajustado(s)</span>' : '') + '</div>' +
       '<div class="bars" style="margin-bottom:16px">' + a.areas.map(function (x) { var c = x.pct >= 70 ? 'var(--teal)' : 'var(--red)'; return '<div class="brow"><div class="bn">' + h(x.materia) + '</div><div class="bt"><i style="width:' + x.pct + '%;background:' + c + '"></i></div><div class="bv" style="color:' + c + '">' + x.pct + '</div></div>'; }).join('') + '</div>' +
       '<h3 class="h3">Firmas y consentimientos</h3>' + (d.consentimientos.length ? d.consentimientos.map(function (c) { return '<div class="notif ok">' + h(c.tipo) + ' · ' + fdt(c.fecha) + ' · firma: <b>' + h(c.nombreCompleto) + '</b> · huella ' + h(c.huella.slice(0, 16)) + '…</div>'; }).join('') : '<p class="muted">Sin firmas registradas.</p>') +
       '<h3 class="h3" style="margin-top:16px">Incidencias (' + d.incidencias.length + ')</h3>' + (d.incidencias.length ? d.incidencias.map(function (i) { return '<div class="notif">' + fdt(i.fecha) + ' · ' + h(i.tipo) + ' · ' + h(i.detalle) + '</div>'; }).join('') : '<p class="muted">Sin incidencias.</p>') +
-      '<h3 class="h3" style="margin-top:16px">Respuestas</h3>';
+      '<div class="row" style="margin-top:16px;justify-content:space-between"><h3 class="h3" style="margin:0">Respuestas</h3>' + (a.ajustes ? '<button class="btn ghost sm" id="dt-hist">Ver historial de cambios</button>' : '') + '</div>';
     d.preguntas.forEach(function (q) {
-      var u = d.respuestas[q.n], k = d.clave[q.n];
-      html += '<div class="q"><div class="qh"><div class="num">' + q.n + '</div><div style="flex:1;min-width:0"><p class="stem">' + h(q.stem) + '</p><div class="opts">' +
+      var u = d.respuestas[q.n], k = d.clave[q.n], aj = d.ajustes[q.n];
+      var orig = u === k, bien = aj ? aj.dictamen === 'correcta' : orig;
+      html += '<div class="q" id="dq-' + q.n + '"><div class="qh"><div class="num">' + q.n + '</div><div style="flex:1;min-width:0"><p class="stem">' + h(q.stem) + '</p><div class="opts">' +
         q.options.map(function (o, i) { var l = 'abcd'[i]; return '<div class="opt' + (l === k ? ' correct' : (l === u ? ' wrong' : '')) + '"><span class="ol">' + l + '</span><span>' + h(o) + '</span></div>'; }).join('') +
-        '</div><div class="muted" style="font-size:12px;margin-top:6px">Alumno: <b>' + (u || 'sin responder') + '</b> · Clave: <b>' + k + '</b> ' + (u === k ? '✓' : '✗') + '</div></div></div></div>';
+        '</div><div class="muted" style="font-size:12px;margin-top:6px">Alumno: <b>' + (u || 'sin responder') + '</b> · Clave: <b>' + k + '</b> · Dictamen: <b style="color:' + (bien ? 'var(--teal)' : 'var(--red)') + '">' + (bien ? '✓ correcta' : '✗ incorrecta') + '</b>' +
+        (d.marcas[q.n] ? ' · <span class="pill warn">' + d.marcas[q.n] + ' marca(s) de revisión</span>' : '') + '</div>' +
+        (aj ? '<div class="notif" style="margin-top:6px">Dictamen cambiado de <b>' + h(aj.original) + '</b> a <b>' + h(aj.dictamen) + '</b> por ' + h(aj.cargo) + ' (' + h(aj.por) + ') · ' + fdt(aj.fecha) + '<br>Justificación: ' + h(aj.justificacion) + '</div>' : '') +
+        '<div class="row" style="margin-top:8px;gap:6px"><button class="btn ghost sm" data-mk="' + q.n + '">Marcar para revisión / opinar</button>' +
+        (d.puedeAjustar ? '<button class="btn ghost sm" data-aj="' + q.n + '" data-to="' + (bien ? 'incorrecta' : 'correcta') + '">Cambiar a ' + (bien ? 'incorrecta' : 'correcta') + '</button>' : '') + '</div>' +
+        '</div></div></div>';
     });
+    var sc = keepScroll ? $('#m-body').scrollTop : 0;
     modal(d.alumno.apellidos + ', ' + d.alumno.nombre, html, true);
-    $('#m-body').insertAdjacentHTML('afterbegin', '<p class="note" style="margin-bottom:14px">Resultado emitido automáticamente; no puede editarse ni recalificarse.</p>');
+    $('#m-body').insertAdjacentHTML('afterbegin', '<p class="note" style="margin-bottom:14px">' + (d.puedeAjustar ? 'Puede cambiar el dictamen de una respuesta (correcta ↔ incorrecta). Cada cambio exige justificación, recalcula la calificación y queda registrado en la bitácora.' : 'Puede marcar reactivos para revisión y dejar su opinión. El cambio de dictamen corresponde al jefe de servicio, enseñanza o la coordinación.') + '</p>');
+    if (sc) $('#m-body').scrollTop = sc;
+    var hb = $('#dt-hist'); if (hb) hb.onclick = function () { histAjustes(a.id); };
+    $('#m-body').onclick = function (ev) {
+      var m = ev.target.closest('[data-mk]'); if (m) return markForm(Number(m.dataset.mk), a.id, function () { openDetail(id, true); });
+      var j = ev.target.closest('[data-aj]'); if (j) return adjustForm(a.id, Number(j.dataset.aj), j.dataset.to, d, function () { openDetail(id, true); loadResults(); });
+    };
   }).catch(fail);
-};
+}
+/* Formularios en línea dentro de la tarjeta del reactivo */
+function inlineBox(n, html) {
+  $$('.inl-box').forEach(function (x) { x.remove(); });
+  var host = document.getElementById('dq-' + n) || document.getElementById('rq-' + n);
+  host.querySelector('.qh > div:last-child').insertAdjacentHTML('beforeend', '<div class="inl-box card pad" style="margin-top:10px;box-shadow:none;border:1px solid var(--line,#dde5ea)">' + html + '</div>');
+  return host.querySelector('.inl-box');
+}
+function markForm(n, attemptId, after) {
+  var box = inlineBox(n, '<div class="field"><label class="f">Motivo</label><select class="t" id="mk-mo"><option>Redacción ambigua</option><option>Clave posiblemente incorrecta</option><option>Más de una respuesta válida</option><option>Contenido desactualizado</option><option>Fuera del temario</option><option>Otro</option></select></div>' +
+    '<div class="field"><label class="f">Opinión (opcional)</label><textarea class="t" id="mk-op" rows="3" placeholder="Si lo considera, explique su opinión sobre el reactivo"></textarea></div>' +
+    '<div class="msg" id="mk-m"></div><div class="row"><button class="btn primary sm" id="mk-go">Marcar reactivo ' + n + '</button><button class="btn ghost sm" id="mk-x">Cancelar</button></div>');
+  box.querySelector('#mk-x').onclick = function () { box.remove(); };
+  box.querySelector('#mk-go').onclick = function () {
+    call('marcarReactivo', { n: n, motivo: $('#mk-mo').value, opinion: $('#mk-op').value, attemptId: attemptId || '' })
+      .then(function () { toast('Reactivo ' + n + ' marcado para revisión.'); after && after(); }).catch(function (er) { $('#mk-m').textContent = er.error; });
+  };
+}
+function adjustForm(attemptId, n, to, d, after) {
+  var aj = d.ajustes[n];
+  var opts = '<option value="' + to + '">Cambiar a ' + to + '</option>' + (aj ? '<option value="original">Restaurar dictamen original (' + h(aj.original) + ')</option>' : '');
+  var box = inlineBox(n, '<div class="field"><label class="f">Nuevo dictamen</label><select class="t" id="aj-to">' + opts + '</select></div>' +
+    '<div class="field"><label class="f">Justificación del cambio (obligatoria)</label><textarea class="t" id="aj-j" rows="3" placeholder="Explique por qué se modifica el dictamen de esta respuesta"></textarea></div>' +
+    '<div class="msg" id="aj-m"></div><div class="row"><button class="btn primary sm" id="aj-go">Aplicar cambio</button><button class="btn ghost sm" id="aj-x">Cancelar</button></div>');
+  box.querySelector('#aj-x').onclick = function () { box.remove(); };
+  box.querySelector('#aj-go').onclick = function () {
+    var j = $('#aj-j').value.trim();
+    if (j.length < 15) { $('#aj-m').textContent = 'Escriba la justificación (al menos 15 caracteres).'; return; }
+    if (!confirm('Se cambiará el dictamen del reactivo ' + n + ' y se recalculará la calificación. El cambio queda registrado con su nombre y justificación. ¿Continuar?')) return;
+    call('ajustarRespuesta', { attemptId: attemptId, n: n, dictamen: $('#aj-to').value, justificacion: j }).then(function (r) {
+      toast('Dictamen actualizado. Calificación: ' + r.antes.calificacion + ' → ' + r.attempt.calificacion + ' (' + r.attempt.estatus + ').');
+      after && after();
+    }).catch(function (er) { $('#aj-m').textContent = er.error; });
+  };
+}
+function histAjustes(attemptId) {
+  call('historialAjustes', { attemptId: attemptId }).then(function (d) {
+    var box = $('#m-body');
+    box.insertAdjacentHTML('afterbegin', '<div class="card pad" style="margin-bottom:14px;box-shadow:none"><h3 class="h3">Historial de cambios de dictamen</h3>' + (d.rows.length ? d.rows.map(function (r) {
+      return '<div class="notif">' + fdt(r.fecha) + ' · Reactivo <b>' + r.n + '</b>: ' + h(r.de) + ' → <b>' + h(r.a) + '</b> · ' + h(r.nombre) + ' (' + h(r.cargo) + ')<br>' + h(r.justificacion) + '</div>';
+    }).join('') : '<p class="muted">Sin cambios.</p>') + '</div>');
+    box.scrollTop = 0;
+  }).catch(fail);
+}
 
 
 $('#r-exp').onclick = function () {
@@ -879,7 +972,8 @@ $('#r-exp').onclick = function () {
 
 /* ---------- sustentantes ---------- */
 var S = [];
-function loadStudents() { call('listStudents').then(function (d) { S = d.rows; renderStudents(); }).catch(fail); }
+var SP = { puedeEditar: false, puedeBorrar: false, alcance: null };
+function loadStudents() { call('listStudents').then(function (d) { S = d.rows; SP = d; renderStudents(); }).catch(fail); }
 $('#s-q').oninput = renderStudents;
 function renderStudents() {
   var q = $('#s-q').value.toLowerCase();
@@ -888,10 +982,10 @@ function renderStudents() {
   $('#s-tb').innerHTML = rows.length ? rows.map(function (u) {
     return '<tr><td class="mono"><b>' + h(u.matricula) + '</b></td><td>' + h(u.apellidos + ', ' + u.nombre) + '</td><td>' + h((STATUS.especialidades.filter(function (x) { return x.id === u.especialidad; })[0] || {}).nombre || u.especialidad) + '</td>' +
       '<td>' + h(u.email) + '</td><td class="mono">' + (u.resultado == null ? '—' : u.resultado) + '</td><td>' + (u.estatus ? '<span class="pill ' + (u.estatus === 'APROBADO' ? 'ok' : 'no') + '">' + u.estatus + '</span>' : (u.enCurso ? '<span class="pill warn">EN CURSO</span>' : '<span class="pill n">Pendiente</span>')) + '</td>' +
-      '<td class="act"><button class="btn ghost sm" data-ed="' + u.id + '">Editar</button></td></tr>';
+      '<td class="act">' + (u.prueba ? '<span class="pill warn">Prueba</span> ' : '') + (SP.puedeEditar ? '<button class="btn ghost sm" data-ed="' + u.id + '">Editar</button>' : '') + '</td></tr>';
   }).join('') : '<tr><td colspan="7"><div class="empty"><b>Sin sustentantes</b>Inscríbalos para enviarles su temario.</div></td></tr>';
 }
-function specOptions(v) { return STATUS.especialidades.map(function (s) { return '<option value="' + s.id + '"' + (v === s.id ? ' selected' : '') + '>' + h(s.nombre) + '</option>'; }).join(''); }
+function specOptions(v, only) { return STATUS.especialidades.filter(function (s) { return !only || s.id === only; }).map(function (s) { return '<option value="' + s.id + '"' + (v === s.id ? ' selected' : '') + '>' + h(s.nombre) + '</option>'; }).join(''); }
 function studentForm(u) {
   u = u || {};
   return '<form id="f-s"><div class="grid g-2">' +
@@ -901,8 +995,8 @@ function studentForm(u) {
     '<div class="field"><label class="f">WhatsApp (opcional)</label><input class="t" id="s-w" value="' + h(u.whatsapp) + '" placeholder="5215512345678"></div>' +
     '<div class="field"><label class="f">Matrícula / folio</label><input class="t mono" id="s-m" value="' + h(u.matricula) + '" placeholder="Si se deja vacío se usa el usuario"></div>' +
     '<div class="field"><label class="f">Contraseña</label><input class="t mono" id="s-p" value="' + (u.id ? '' : rndPw()) + '" placeholder="' + (u.id ? 'Dejar vacío para conservar' : '') + '"></div></div>' +
-    '<div class="field"><label class="f">Subespecialidad</label><select class="t" id="s-sp">' + specOptions(u.especialidad) + '</select></div>' +
-    '<div class="msg" id="s-m2"></div><div class="row"><button class="btn primary">' + (u.id ? 'Guardar' : 'Inscribir y enviar temario') + '</button>' + (u.id ? '<button type="button" class="btn danger" id="s-del">Eliminar</button>' : '') + '</div></form>';
+    '<div class="field"><label class="f">Subespecialidad</label><select class="t" id="s-sp">' + specOptions(u.especialidad, SP.alcance) + '</select></div>' +
+    '<div class="msg" id="s-m2"></div><div class="row"><button class="btn primary">' + (u.id ? 'Guardar' : 'Inscribir y enviar temario') + '</button>' + (u.id && SP.puedeBorrar ? '<button type="button" class="btn danger" id="s-del">Eliminar</button>' : '') + '</div></form>';
 }
 $('#s-new').onclick = function () {
   modal('Inscribir sustentante', studentForm());
@@ -927,7 +1021,7 @@ $('#s-tb').onclick = function (e) {
     if ($('#s-p').value) p.password = $('#s-p').value;
     call('updateUser', p).then(function () { closeModal(); loadStudents(); toast('Datos actualizados.'); }).catch(function (er) { $('#s-m2').textContent = er.error; });
   };
-  $('#s-del').onclick = function () { if (confirm('¿Eliminar a ' + u.apellidos + ', ' + u.nombre + '?')) call('deleteUser', { id: u.id }).then(function () { closeModal(); loadStudents(); }).catch(function (er) { $('#s-m2').textContent = er.error; }); };
+  if ($('#s-del')) $('#s-del').onclick = function () { if (confirm('¿Eliminar a ' + u.apellidos + ', ' + u.nombre + '?' + (u.prueba ? ' Es un sustentante de prueba: se borrará también su examen y sus firmas.' : ''))) call('deleteUser', { id: u.id }).then(function () { closeModal(); loadStudents(); }).catch(function (er) { $('#s-m2').textContent = er.error; }); };
 };
 $('#s-bulk').onclick = function () {
   modal('Alta masiva', '<p class="muted">Pegue desde Excel: <b>Correo · Apellidos · Nombre(s) · Matrícula · WhatsApp · Especialidad (neonatologia, gastroenterologia, critico, oncologia, cirugia)</b></p>' +
@@ -952,6 +1046,12 @@ function loadConfig() {
   call('getSettings').then(function (s) {
     $('#st-min').value = s.minAprob; $('#st-int').value = s.intentos;
     $('#ch-info').innerHTML = 'Correo: <b>' + h(s.canales.correo) + '</b><br>WhatsApp: <b>' + h(s.canales.whatsapp) + '</b>';
+    var g = s.institucion || {};
+    $('#cfg-inst').innerHTML = [['titularPediatria', 'Titular de Pediatría'], ['jefeEnsenanza', 'Jefe de Enseñanza']].map(function (x) {
+      return '<div class="field"><label class="f">' + x[1] + '</label><input class="t" data-g="' + x[0] + '" value="' + h(g[x[0]]) + '"></div>' +
+        '<div class="field"><label class="f">Correo · ' + x[1] + '</label><input class="t" type="email" data-g="' + x[0] + 'Email" value="' + h(g[x[0] + 'Email']) + '"></div>' +
+        '<div class="field"><label class="f">WhatsApp · ' + x[1] + '</label><input class="t" data-g="' + x[0] + 'Tel" value="' + h(g[x[0] + 'Tel']) + '" placeholder="5215512345678"></div><div></div>';
+    }).join('');
     $('#cfg-specs').innerHTML = s.catalogo.map(function (c) {
       var v = s.especialidades[c.id] || {};
       return '<div class="card pad" style="margin-bottom:14px;box-shadow:none"><h4 style="margin:0 0 10px;font-family:var(--disp)">' + h(c.nombre) + ' <span class="pill n">' + c.items + ' reactivos</span></h4>' +
@@ -966,7 +1066,7 @@ function loadConfig() {
 }
 
 function loadDiag() {
-  if (!ME || ME.rol !== 'admin') return;
+  if (!isFull()) return;
   call('diagnostico', {}, true).then(function (d) {
     $('#diag-card').style.display = '';
     if (!d.total) {
@@ -1044,7 +1144,8 @@ $('#f-gen').onsubmit = function (e) {
 $('#cfg-save').onclick = function () {
   var out = {};
   $$('#cfg-specs [data-k]').forEach(function (i) { var k = i.dataset.k; out[k] = out[k] || {}; out[k][i.dataset.f] = i.value; });
-  call('saveSettings', { especialidades: out }).then(function () { $('#cfg-msg').className = 'msg ok'; $('#cfg-msg').textContent = 'Destinatarios guardados.'; }).catch(function (er) { $('#cfg-msg').textContent = er.error; });
+  var inst = {}; $$('#cfg-inst [data-g]').forEach(function (i) { inst[i.dataset.g] = i.value; });
+  call('saveSettings', { especialidades: out, institucion: inst }).then(function () { $('#cfg-msg').className = 'msg ok'; $('#cfg-msg').textContent = 'Destinatarios guardados.'; }).catch(function (er) { $('#cfg-msg').textContent = er.error; });
 };
 
 /* ---------- bitácora ---------- */
@@ -1053,7 +1154,7 @@ function loadNotifs() {
     $('#n-tb').innerHTML = d.rows.length ? d.rows.map(function (n) {
       return '<tr><td class="mono">' + fdt(n.creado) + '</td><td>' + h(n.canal) + '</td><td>' + h(n.nombre ? n.nombre + ' · ' : '') + h(n.para) + '</td><td>' + h(n.tipo) + '</td>' +
         '<td><span class="pill ' + (n.estado === 'enviado' ? 'ok' : (n.estado === 'error' ? 'no' : 'n')) + '">' + h(n.estado) + '</span></td><td style="white-space:normal;max-width:340px">' + h(n.detalle) + '</td>' +
-        '<td class="act">' + (ME.rol === 'admin' && n.estado !== 'enviado' ? '<button class="btn ghost sm" data-rs="' + n.id + '">Reenviar</button>' : '') + '</td></tr>';
+        '<td class="act">' + (isFull() && n.estado !== 'enviado' ? '<button class="btn ghost sm" data-rs="' + n.id + '">Reenviar</button>' : '') + '</td></tr>';
     }).join('') : '<tr><td colspan="7"><div class="empty"><b>Sin envíos</b>Se registrarán al inscribir alumnos y al emitir resultados.</div></td></tr>';
   }).catch(fail);
   call('listConsents').then(function (d) {
@@ -1093,6 +1194,148 @@ $('#r-acta').onclick = function () {
     }).catch(function (e) { $('#ac-m').textContent = e.error; });
   };
 };
+
+/* ---------- reactivos: revisión académica ---------- */
+var RV = { preguntas: [] };
+function loadReview() { call('examReview').then(function (d) { RV = d; renderReview(); }).catch(fail); }
+$('#rv-refresh').onclick = loadReview;
+$('#rv-q').oninput = renderReview; $('#rv-f').onchange = renderReview;
+function renderReview() {
+  var q = $('#rv-q').value.toLowerCase().trim(), f = $('#rv-f').value;
+  var rows = RV.preguntas.filter(function (p) {
+    if (f === 'marcados' && !p.revisiones.length) return false;
+    if (f === 'abiertas' && !p.revisiones.some(function (r) { return r.estado === 'abierta'; })) return false;
+    if (q && String(p.n) !== q && (p.m + ' ' + p.stem).toLowerCase().indexOf(q) < 0) return false;
+    return true;
+  });
+  $('#rv-count').textContent = rows.length + ' reactivos · ' + RV.preguntas.filter(function (p) { return p.revisiones.length; }).length + ' marcados';
+  $('#rv-list').innerHTML = rows.length ? rows.map(function (p) {
+    var pct = p.evaluados ? Math.round(p.aciertos / p.evaluados * 100) : null;
+    var revs = p.revisiones.map(function (r) {
+      return '<div class="notif' + (r.estado === 'atendida' ? ' ok' : '') + '" style="margin-top:6px"><b>' + h(r.motivo) + '</b> · ' + h(r.nombre) + ' (' + h(r.cargo) + ') · ' + fdt(r.fecha) +
+        ' · <span class="pill ' + (r.estado === 'atendida' ? 'ok' : 'warn') + '">' + h(r.estado) + '</span>' +
+        (r.opinion ? '<br>' + h(r.opinion) : '') +
+        (r.respuesta ? '<br><span class="muted">Respuesta de ' + h(r.atendidaPor) + ' (' + h(r.atendidaCargo) + '): ' + h(r.respuesta) + '</span>' : '') +
+        '<div class="row" style="margin-top:6px;gap:6px">' +
+        (RV.puedeAtender ? '<button class="btn ghost sm" data-at="' + r.id + '" data-st="' + (r.estado === 'atendida' ? 'abierta' : 'atendida') + '">' + (r.estado === 'atendida' ? 'Reabrir' : 'Marcar como atendida') + '</button>' : '') +
+        (RV.puedeBorrar ? '<button class="btn danger sm" data-rd="' + r.id + '">Eliminar</button>' : '') + '</div></div>';
+    }).join('');
+    return '<div class="q" id="rq-' + p.n + '"><div class="qh"><div class="num">' + p.n + '</div><div style="flex:1;min-width:0">' +
+      '<div class="row" style="gap:6px;margin-bottom:6px"><span class="pill n">' + h(p.m) + '</span>' + (pct == null ? '' : '<span class="pill ' + (pct >= 50 ? 'ok' : 'no') + '">' + pct + '% de aciertos (' + p.aciertos + '/' + p.evaluados + ')</span>') +
+      (p.revisiones.length ? '<span class="pill warn">' + p.revisiones.length + ' marca(s)</span>' : '') + '</div>' +
+      '<p class="stem">' + h(p.stem) + '</p><div class="opts">' +
+      p.options.map(function (o, i) { var l = 'abcd'[i]; return '<div class="opt' + (l === p.clave ? ' correct' : '') + '"><span class="ol">' + l + '</span><span>' + h(o) + '</span></div>'; }).join('') +
+      '</div><div class="muted" style="font-size:12px;margin-top:6px">Clave: <b>' + h(p.clave) + '</b></div>' + revs +
+      '<div class="row" style="margin-top:8px"><button class="btn ghost sm" data-mk="' + p.n + '">Marcar para revisión / opinar</button></div>' +
+      '</div></div></div>';
+  }).join('') : '<div class="empty"><b>Sin reactivos</b>No hay reactivos que coincidan con el filtro.</div>';
+}
+$('#rv-list').onclick = function (e) {
+  var m = e.target.closest('[data-mk]'); if (m) return markForm(Number(m.dataset.mk), '', loadReview);
+  var a = e.target.closest('[data-at]');
+  if (a) {
+    var resp = a.dataset.st === 'atendida' ? prompt('Respuesta o acuerdo (opcional):', '') : '';
+    if (resp === null) return;
+    return call('atenderRevision', { id: a.dataset.at, estado: a.dataset.st, respuesta: resp }).then(function () { toast('Revisión actualizada.'); loadReview(); }).catch(fail);
+  }
+  var d = e.target.closest('[data-rd]');
+  if (d && confirm('¿Eliminar esta marca de revisión? Esta acción no se puede deshacer.')) call('borrarRevision', { id: d.dataset.rd }).then(function () { toast('Marca eliminada.'); loadReview(); }).catch(fail);
+};
+
+/* ---------- usuarios del personal ---------- */
+var STF = { rows: [] };
+var ROLE_INFO = [
+  ['titular_ped', 'Titular de Pediatría', 'Uno para todo el hospital. Revisa exámenes y resultados de todas las subespecialidades, marca reactivos para revisión y opina, e inscribe sustentantes.'],
+  ['titular', 'Titular de subespecialidad', 'Revisa exámenes y resultados de su subespecialidad, marca reactivos para revisión y opina, e inscribe sustentantes.'],
+  ['jefe', 'Jefe de servicio', 'Inscribe sustentantes, ve resultados de su subespecialidad, marca reactivos y opina, y cambia el dictamen correcta ↔ incorrecta de una respuesta, siempre con justificación.'],
+  ['ensenanza', 'Jefe de Enseñanza', 'Todos los accesos del coordinador, excepto borrar información.'],
+  ['admin', 'Coordinador', 'Acceso total. Es el único rol que puede borrar información.']
+];
+function loadStaff() {
+  $('#u-roles').innerHTML = ROLE_INFO.filter(function (r) { return r[0] !== 'admin' || isAdmin(); }).map(function (r) { return '<div class="card pad" style="box-shadow:none"><b>' + h(r[1]) + '</b><p class="muted" style="font-size:13px;margin:6px 0 0">' + h(r[2]) + '</p></div>'; }).join('');
+  call('listStaff').then(function (d) { STF = d; renderStaff(); }).catch(fail);
+}
+function renderStaff() {
+  var order = { admin: 0, ensenanza: 1, calificador: 1, titular: 2, jefe: 3 };
+  var rows = STF.rows.slice().sort(function (a, b) { return (order[a.rol] - order[b.rol]) || (a.cargo || '').localeCompare(b.cargo || ''); });
+  $('#u-tb').innerHTML = rows.map(function (u) {
+    return '<tr><td class="mono"><b>' + h(u.usuario) + '</b></td><td>' + h((u.nombre + ' ' + u.apellidos).trim()) + '</td><td>' + h(u.cargo) + '</td><td>' + h(u.email) + '</td>' +
+      '<td>' + (u.activo ? '<span class="pill ok">Activo</span>' : '<span class="pill no">Inactivo</span>') + '</td><td class="mono">' + (u.ultimoAcceso ? fdt(u.ultimoAcceso) : '—') + '</td>' +
+      '<td class="act">' + (u.id === ME.id || (u.rol === 'admin' && !isAdmin()) ? '' : '<button class="btn ghost sm" data-ue="' + u.id + '">Editar</button>') + '</td></tr>';
+  }).join('');
+}
+function roleKey(u) { return u.rol === 'titular' && (!u.especialidad || u.especialidad === 'pediatria') ? 'titular_ped' : (u.rol === 'calificador' ? 'ensenanza' : u.rol); }
+function staffForm(u) {
+  u = u || {};
+  var rk = u.id ? roleKey(u) : 'titular';
+  return '<form id="f-u"><div class="grid g-2">' +
+    '<div class="field"><label class="f">Tipo de usuario</label><select class="t" id="u-rol">' + ROLE_INFO.filter(function (r) { return r[0] !== 'admin' || isAdmin(); }).map(function (r) { return '<option value="' + r[0] + '"' + (r[0] === rk ? ' selected' : '') + '>' + h(r[1]) + '</option>'; }).join('') + '</select></div>' +
+    '<div class="field" id="u-spw"><label class="f">Subespecialidad</label><select class="t" id="u-sp">' + specOptions(u.especialidad) + '</select></div>' +
+    '<div class="field"><label class="f">Nombre(s)</label><input class="t" id="u-n" value="' + h(u.nombre) + '" required placeholder="Dr. / Dra. …"></div>' +
+    '<div class="field"><label class="f">Apellidos</label><input class="t" id="u-a" value="' + h(u.apellidos) + '"></div>' +
+    '<div class="field"><label class="f">Correo electrónico</label><input class="t" id="u-e" type="email" value="' + h(u.email) + '" placeholder="Para acceso con Google y avisos"></div>' +
+    '<div class="field"><label class="f">WhatsApp (opcional)</label><input class="t" id="u-w" value="' + h(u.whatsapp) + '" placeholder="5215512345678"></div>' +
+    (u.id ? '' : '<div class="field"><label class="f">Usuario</label><input class="t mono" id="u-u" required placeholder="ej. titular.neo"></div>') +
+    '<div class="field"><label class="f">Contraseña</label><input class="t mono" id="u-p" value="' + (u.id ? '' : rndPw()) + '" placeholder="' + (u.id ? 'Dejar vacío para conservar' : '') + '"></div></div>' +
+    (u.id ? '<label class="check sm" style="margin-bottom:12px"><input type="checkbox" id="u-act"' + (u.activo ? ' checked' : '') + '> <span>Usuario activo (puede iniciar sesión)</span></label>' : '') +
+    '<p class="note" id="u-desc" style="margin:0 0 12px"></p>' +
+    '<div class="msg" id="u-m"></div><div class="row"><button class="btn primary">' + (u.id ? 'Guardar' : 'Dar de alta') + '</button>' + (u.id && STF.puedeBorrar ? '<button type="button" class="btn danger" id="u-del">Eliminar</button>' : '') + '</div></form>';
+}
+function wireStaffForm() {
+  function sync() {
+    var r = $('#u-rol').value;
+    $('#u-spw').style.display = (r === 'titular' || r === 'jefe') ? '' : 'none';
+    $('#u-desc').textContent = (ROLE_INFO.filter(function (x) { return x[0] === r; })[0] || [])[2] || '';
+  }
+  $('#u-rol').onchange = sync; sync();
+}
+function staffParams() {
+  var r = $('#u-rol').value, p = { nombre: $('#u-n').value, apellidos: $('#u-a').value, email: $('#u-e').value, whatsapp: $('#u-w').value };
+  if (r === 'titular_ped') { p.rol = 'titular'; p.especialidad = 'pediatria'; }
+  else { p.rol = r; p.especialidad = (r === 'titular' || r === 'jefe') ? $('#u-sp').value : ''; }
+  return p;
+}
+$('#u-new').onclick = function () {
+  modal('Dar de alta usuario', staffForm()); wireStaffForm();
+  $('#f-u').onsubmit = function (e) {
+    e.preventDefault();
+    var p = staffParams(); p.usuario = $('#u-u').value; p.password = $('#u-p').value;
+    call('createStaff', p).then(function (d) {
+      modal('Usuario creado', '<p class="muted">Entregue estas credenciales a ' + h(d.user.nombre) + ':</p><div class="cred">Cargo <b>' + h(d.user.cargo) + '</b><br>Usuario <b>' + h(d.user.usuario) + '</b> · Contraseña <b>' + h(p.password) + '</b></div>' +
+        '<p class="note" style="margin-top:12px">Si el puesto estaba vacío en «Especialidades», se registró como destinatario de resultados y firma de actas.</p><div class="row" style="margin-top:14px"><button class="btn primary" id="u-ok">Listo</button></div>');
+      $('#u-ok').onclick = closeModal; loadStaff();
+    }).catch(function (er) { $('#u-m').textContent = er.error; });
+  };
+};
+$('#u-tb').onclick = function (e) {
+  var b = e.target.closest('[data-ue]'); if (!b) return;
+  var u = STF.rows.filter(function (x) { return x.id === b.dataset.ue; })[0];
+  modal('Editar ' + u.usuario, staffForm(u)); wireStaffForm();
+  $('#f-u').onsubmit = function (ev) {
+    ev.preventDefault();
+    var p = staffParams(); p.id = u.id; p.activo = $('#u-act').checked;
+    if ($('#u-p').value) p.password = $('#u-p').value;
+    call('updateUser', p).then(function () { closeModal(); loadStaff(); toast('Usuario actualizado.'); }).catch(function (er) { $('#u-m').textContent = er.error; });
+  };
+  if ($('#u-del')) $('#u-del').onclick = function () {
+    if (confirm('¿Eliminar al usuario ' + u.usuario + '? Para conservar su historial puede desactivarlo en su lugar.')) call('deleteUser', { id: u.id }).then(function () { closeModal(); loadStaff(); toast('Usuario eliminado.'); }).catch(function (er) { $('#u-m').textContent = er.error; });
+  };
+};
+
+/* ---------- bitácora de cambios ---------- */
+var AU_LBL = { ajuste_respuesta: 'Cambio de dictamen', reactivo_marcado: 'Reactivo marcado', revision_atendida: 'Revisión atendida', revision_borrada: 'Revisión eliminada',
+  alta_sustentante: 'Alta de sustentante', alta_masiva: 'Alta masiva', alta_personal: 'Alta de personal', usuario_modificado: 'Usuario modificado', usuario_eliminado: 'Usuario eliminado',
+  configuracion: 'Configuración', acta_emitida: 'Acta emitida', acta_reimpresa: 'Acta reimpresa', recalificacion: 'Recalificación', constancia_emitida: 'Constancia emitida',
+  reinicio_folios: 'Reinicio de folios', acceso_google: 'Acceso con Google', password_restablecida: 'Contraseña restablecida', reset_link_generado: 'Código de restablecimiento', dominios_google: 'Dominios de Google' };
+function loadAudit() {
+  call('listAudit', {}, true).then(function (d) {
+    $('#au-tb').innerHTML = d.rows.length ? d.rows.map(function (a) {
+      var det = a.tipo === 'ajuste_respuesta' ? 'Matrícula ' + (a.matricula || '') + ' · reactivo ' + a.reactivo + ': ' + a.de + ' → ' + a.a + ' · calificación ' + a.antes.calificacion + ' → ' + a.despues.calificacion + ' · ' + a.justificacion
+        : (a.objetivo ? a.objetivo + (a.rolObjetivo ? ' (' + a.rolObjetivo + ')' : '') : (a.alumno || a.folio || (a.reactivo ? 'Reactivo ' + a.reactivo : '') || ''));
+      return '<tr><td class="mono">' + fdt(a.fecha) + '</td><td>' + h(AU_LBL[a.tipo] || a.tipo) + '</td><td>' + h(a.usuario || '') + (a.cargo ? ' · ' + h(a.cargo) : '') + '</td><td style="white-space:normal;max-width:420px">' + h(det) + '</td></tr>';
+    }).join('') : '<tr><td colspan="4"><div class="empty"><b>Sin movimientos</b></div></td></tr>';
+  }).catch(function () {});
+}
 
 /* ---------- Excel ---------- */
 $('#r-xlsx').onclick = function () {

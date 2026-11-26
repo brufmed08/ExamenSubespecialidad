@@ -170,7 +170,7 @@
 <section class="view" id="v-result"><div class="wrap pt" id="res-body"></div></section>
 
 <section class="view" id="v-results"><div class="wrap pt">
-  <div class="head-row"><div><div class="kick">Calificaciones</div><h2 class="title">Resultados</h2><p class="muted" style="margin:0">Resultados emitidos automáticamente. No son editables.</p></div>
+  <div class="head-row"><div><div class="kick">Calificaciones</div><h2 class="title">Resultados</h2><p class="muted" style="margin:0" id="r-sub">Resultados emitidos automáticamente. Solo el jefe de servicio, enseñanza y la coordinación pueden cambiar el dictamen de una respuesta, siempre con justificación.</p></div>
   <div class="row"><button class="btn dark" id="r-acta">Acta por subespecialidad</button><button class="btn dark" id="r-exp">Expediente (5 actas)</button><button class="btn primary" id="r-xlsx">Descargar Excel</button><button class="btn ghost" id="r-refresh">Actualizar</button></div></div>
   <div class="grid g-4 stats" id="r-stats"></div>
   <div class="row filters"><input id="r-q" class="t" placeholder="Buscar nombre, matrícula o especialidad…"><select id="r-spec" class="t"><option value="">Todas las especialidades</option></select></div>
@@ -182,6 +182,20 @@
   <div class="row"><button class="btn primary" id="s-new">Inscribir sustentante</button><button class="btn dark" id="s-bulk">Alta masiva</button></div></div>
   <div class="row filters"><input id="s-q" class="t" placeholder="Buscar…"><span class="pill n" id="s-count"></span></div>
   <div class="tblwrap"><table><thead><tr><th>Matrícula</th><th>Alumno</th><th>Especialidad</th><th>Correo</th><th>Calificación</th><th>Estatus</th><th></th></tr></thead><tbody id="s-tb"></tbody></table></div>
+</div></section>
+
+<section class="view" id="v-review"><div class="wrap pt">
+  <div class="head-row"><div><div class="kick">Revisión académica</div><h2 class="title">Reactivos del examen</h2><p class="muted" style="margin:0">Revise cada reactivo con su clave. Puede marcarlo para revisión y, si lo considera, dejar su opinión.</p></div>
+  <div class="row"><button class="btn ghost" id="rv-refresh">Actualizar</button></div></div>
+  <div class="row filters"><input id="rv-q" class="t" placeholder="Buscar por número, materia o texto…"><select id="rv-f" class="t"><option value="">Todos los reactivos</option><option value="marcados">Solo marcados</option><option value="abiertas">Con revisión abierta</option></select><span class="pill n" id="rv-count"></span></div>
+  <div id="rv-list"></div>
+</div></section>
+
+<section class="view" id="v-staff"><div class="wrap pt">
+  <div class="head-row"><div><div class="kick">Administración</div><h2 class="title">Usuarios del personal</h2><p class="muted" style="margin:0">Alta de titulares, jefes de servicio y enseñanza. Solo el coordinador puede eliminar usuarios.</p></div>
+  <div class="row"><button class="btn primary" id="u-new">Dar de alta usuario</button></div></div>
+  <div class="grid g-2" style="margin:0 0 18px" id="u-roles"></div>
+  <div class="tblwrap"><table><thead><tr><th>Usuario</th><th>Nombre</th><th>Cargo</th><th>Correo</th><th>Estado</th><th>Último acceso</th><th></th></tr></thead><tbody id="u-tb"></tbody></table></div>
 </div></section>
 
 <section class="view" id="v-config"><div class="wrap pt">
@@ -200,10 +214,14 @@
     <div class="card pad"><h3 class="h3">Canales de notificación</h3><div id="ch-info" class="muted" style="font-size:13px"></div>
       <div class="note" style="margin-top:12px">Correo: SMTP o MailApp de Google. WhatsApp: CallMeBot o WhatsApp Cloud API (Meta). Si no hay credenciales, el sistema funciona en modo simulación y registra el envío en la bitácora.</div></div>
   </div>
+  <div class="card pad" style="margin-top:20px"><h3 class="h3">Titular de Pediatría y Jefe de Enseñanza</h3>
+    <p class="muted" style="font-size:13px;margin:0 0 12px">Únicos para todo el hospital: firman todas las actas y reciben el resultado de cada sustentante de todas las subespecialidades.</p>
+    <div class="grid g-2" id="cfg-inst"></div>
+  </div>
   <div class="card pad" style="margin-top:20px"><h3 class="h3">Jefes de servicio y titulares por especialidad</h3>
     <div id="cfg-specs"></div>
     <div class="row" style="margin-top:14px"><button class="btn primary" id="cfg-save">Guardar destinatarios</button><span class="msg" id="cfg-msg" style="margin:0"></span></div>
-    <div class="note" style="margin-top:14px">Estos destinatarios reciben por correo y WhatsApp el resultado de cada sustentante de su especialidad.</div>
+    <div class="note" style="margin-top:14px">Estos destinatarios reciben por correo y WhatsApp el resultado de cada sustentante de su especialidad. El botón «Guardar destinatarios» guarda también al Titular de Pediatría y al Jefe de Enseñanza.</div>
   </div>
   <div class="card pad" id="folio-card" style="margin-top:20px">
     <h3 class="h3">Folios de los documentos</h3>
@@ -212,7 +230,7 @@
     <div class="row" style="margin-top:14px">
       <select id="rf-tipo" class="t" style="max-width:230px"><option value="todo">Todos los documentos</option><option value="acta">Actas</option><option value="expediente">Expedientes</option><option value="constancia">Constancias</option></select>
       <select id="rf-esp" class="t" style="max-width:260px"><option value="">Todas las subespecialidades</option></select>
-      <button class="btn danger sm" id="rf-go">Reiniciar numeración</button>
+      <button class="btn danger sm" id="rf-go">Reiniciar numeración</button><span class="muted" id="rf-only" style="font-size:12px">Solo el coordinador puede reiniciar la numeración.</span>
     </div>
   </div>
   <div class="card pad" id="actas-card" style="margin-top:20px">
@@ -234,6 +252,8 @@
   <div class="tblwrap"><table><thead><tr><th>Fecha</th><th>Canal</th><th>Destinatario</th><th>Tipo</th><th>Estado</th><th>Detalle</th><th></th></tr></thead><tbody id="n-tb"></tbody></table></div>
   <h3 class="h3" style="margin-top:26px">Constancias de corrección</h3>
   <div class="tblwrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Subespecialidad</th><th>Exámenes</th><th>Motivo</th><th>Autorizó</th><th></th></tr></thead><tbody id="k-tb"></tbody></table></div>
+  <h3 class="h3" style="margin-top:26px">Cambios y movimientos</h3>
+  <div class="tblwrap"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Usuario</th><th>Detalle</th></tr></thead><tbody id="au-tb"></tbody></table></div>
   <h3 class="h3" style="margin-top:26px">Firmas</h3>
   <div class="tblwrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Alumno</th><th>Matrícula</th><th>Especialidad</th><th>Firma</th><th>Huella</th></tr></thead><tbody id="c-tb"></tbody></table></div>
 </div></section>

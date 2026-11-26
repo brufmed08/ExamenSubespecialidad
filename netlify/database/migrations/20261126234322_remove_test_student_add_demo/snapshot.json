@@ -1,0 +1,80 @@
+{
+  "id": "03e8a32b-58f3-4425-a346-13ae08d7d18e",
+  "prevIds": [
+    "0350ce9d-ea49-4004-8182-5c9f5713c232"
+  ],
+  "version": "8",
+  "dialect": "postgres",
+  "ddl": [
+    {
+      "isRlsEnabled": false,
+      "name": "records",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "collection",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "records"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "records"
+    },
+    {
+      "type": "jsonb",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "data",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "records"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "records"
+    },
+    {
+      "columns": [
+        "collection",
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "records_pkey",
+      "entityType": "pks",
+      "schema": "public",
+      "table": "records"
+    }
+  ],
+  "renames": []
+}
