@@ -1,7 +1,8 @@
 /* API del sistema de evaluación de subespecialidades pediátricas en Netlify.
    El navegador llama POST /api { action, params } con "Authorization: Bearer <token>".
    Los datos persisten en Netlify Database (tabla "records", una fila JSON por documento).
-   Variables opcionales: GOOGLE_CLIENT_ID, SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS, SMTP_FROM,
+   Variables opcionales: GOOGLE_CLIENT_ID, SMTP_USER + SMTP_PASS (Gmail: cuenta y contraseña de aplicación; host/puerto automáticos),
+   SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_FROM, SMTP_FROM_NAME,
    WA_PROVIDER=callmebot|meta, WA_KEY, WA_PHONE_ID, WA_TOKEN */
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
